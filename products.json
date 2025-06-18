@@ -1,0 +1,229 @@
+[
+  {
+    "id": "product1",
+    "title": "Running Shoes",
+        "pageUrl": "running-shoes.html",
+        "categories": ["shoes", "sports"], 
+    "image": "button-image5.jpg",
+    "price": 79.99,
+    "originalPrice": 133.32,
+    "rating": "★★★★☆",
+    "reviews": 124,
+    "variants": [
+      {
+        "color": "#e63946",
+        "colorName": "Red",
+        "stock": 5
+      },
+      {
+        "color": "#4a6fa5",
+        "colorName": "Blue",
+        "stock": 10
+      },
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 0
+      }
+    ]
+  },
+  {
+    "id": "product2",
+    "title": "Wireless Headphones",
+        "pageUrl": "running-shoes2.html",
+         "categories": ["shoes", "electronics"],
+    "image": "button-image6.jpg",
+    "price": 104.99,
+    "originalPrice": 149.99,
+    "rating": "★★★★★",
+    "reviews": 89,
+    "variants": [
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 2
+      },
+      {
+        "color": "#f4a261",
+        "colorName": "Sand",
+        "stock": 0
+      }
+    ]
+  },
+  {
+    "id": "product3",
+    "title": "Running Shoes",
+            "pageUrl": "running-shoes3.html",
+             "categories": ["shoes", "sports"], 
+    "image": "button-image7.jpg",
+    "price": 79.99,
+    "originalPrice": 133.32,
+    "rating": "★★★★☆",
+    "reviews": 124,
+    "variants": [
+      {
+        "color": "#e63946",
+        "colorName": "Red",
+        "stock": 5
+      },
+      {
+        "color": "#4a6fa5",
+        "colorName": "Blue",
+        "stock": 10
+      },
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 0
+      }
+    ]
+  },
+  {
+    "id": "product4",
+    "title": "Wireless Headphones",
+            "pageUrl": "running-shoes4.html",
+            "categories": ["shoes", "sports"],
+    "image": "button-image4.jpg",
+    "price": 104.99,
+    "originalPrice": 149.99,
+    "rating": "★★★★★",
+    "reviews": 89,
+    "variants": [
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 2
+      },
+      {
+        "color": "#f4a261",
+        "colorName": "Sand",
+        "stock": 0
+      }
+    ]
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ,{
+    "id": "product1",
+    "title": "Running Shoes",
+        "pageUrl": "running-shoes.html",
+        "categories": ["shoes", "sports"], 
+    "image": "button-image7.jpg",
+    "price": 79.99,
+    "originalPrice": 133.32,
+    "rating": "★★★★☆",
+    "reviews": 124,
+    "variants": [
+      {
+        "color": "#e63946",
+        "colorName": "Red",
+        "stock": 5
+      },
+      {
+        "color": "#4a6fa5",
+        "colorName": "Blue",
+        "stock": 10
+      },
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 0
+      }
+    ]
+  },
+  {
+    "id": "product2",
+    "title": "Wireless Headphones",
+        "pageUrl": "running-shoes2.html",
+         "categories": ["shoes", "electronics"],
+    "image": "button-image3.jpg",
+    "price": 104.99,
+    "originalPrice": 149.99,
+    "rating": "★★★★★",
+    "reviews": 89,
+    "variants": [
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 2
+      },
+      {
+        "color": "#f4a261",
+        "colorName": "Sand",
+        "stock": 0
+      }
+    ]
+  },
+  {
+    "id": "product3",
+    "title": "Running Shoes",
+            "pageUrl": "running-shoes3.html",
+             "categories": ["shoes", "sports"], 
+    "image": "button-image4.jpg",
+    "price": 79.99,
+    "originalPrice": 133.32,
+    "rating": "★★★★☆",
+    "reviews": 124,
+    "variants": [
+      {
+        "color": "#e63946",
+        "colorName": "Red",
+        "stock": 5
+      },
+      {
+        "color": "#4a6fa5",
+        "colorName": "Blue",
+        "stock": 10
+      },
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 0
+      }
+    ]
+  },
+  {
+    "id": "product4",
+    "title": "Wireless Headphones",
+            "pageUrl": "running-shoes4.html",
+            "categories": ["shoes", "sports"],
+    "image": "button-image5.jpg",
+    "price": 104.99,
+    "originalPrice": 149.99,
+    "rating": "★★★★★",
+    "reviews": 89,
+    "variants": [
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 2
+      },
+      {
+        "color": "#f4a261",
+        "colorName": "Sand",
+        "stock": 0
+      }
+    ]
+  }
+
+
+
+
+
+
+]
