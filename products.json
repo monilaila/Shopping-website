@@ -1,0 +1,293 @@
+[
+  {
+    "id": "product1",
+    "title": "Running Shoes",
+        "pageUrl": "running-shoes.html",
+        "categories": ["shoes", "sports"], 
+    "image": "button-image5.jpg",
+    "price": 79.99,
+    "originalPrice": 133.32,
+    "rating": "★★★★☆",
+    "reviews": 124,
+    "description": "These high-performance running shoes are designed for maximum comfort and durability. Featuring advanced cushioning technology and breathable mesh upper, they provide excellent support for both short sprints and long-distance running. The rubber outsole offers superior traction on various surfaces.",
+    "features": [
+      "Breathable mesh upper",
+      "Advanced cushioning system",
+      "Durable rubber outsole",
+      "Lightweight design",
+      "Multiple color options"
+    ],
+    "variants": [
+      {
+        "color": "#e63946",
+        "colorName": "Red",
+        "stock": 5
+      },
+      {
+        "color": "#4a6fa5",
+        "colorName": "Blue",
+        "stock": 10
+      },
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 0
+      }
+    ]
+  },
+  {
+    "id": "product2",
+    "title": "Wireless Headphones",
+        "pageUrl": "running-shoes2.html",
+         "categories": ["shoes", "electronics"],
+    "image": "button-image6.jpg",
+    "price": 104.99,
+    "originalPrice": 149.99,
+    "rating": "★★★★★",
+    "reviews": 89,
+    "description": "Premium wireless headphones with active noise cancellation. Enjoy crystal-clear sound quality with deep bass and up to 30 hours of battery life. The comfortable over-ear design and built-in microphone make them perfect for both music lovers and professionals.",
+    "features": [
+      "Active noise cancellation",
+      "30-hour battery life",
+      "Built-in microphone",
+      "Bluetooth 5.0",
+      "Foldable design"
+    ],
+    "variants": [
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 2
+      },
+      {
+        "color": "#f4a261",
+        "colorName": "Sand",
+        "stock": 0
+      }
+    ]
+  },
+  {
+    "id": "product3",
+    "title": "Running Shoes",
+            "pageUrl": "running-shoes3.html",
+             "categories": ["shoes", "sports"], 
+    "image": "button-image7.jpg",
+    "price": 79.99,
+    "originalPrice": 133.32,
+    "rating": "★★★★☆",
+    "reviews": 124,
+    "description": "Our latest model of running shoes combines style with functionality. The ergonomic design supports natural foot movement while the responsive midsole provides energy return with every step. Perfect for both training and casual wear.",
+    "features": [
+      "Ergonomic design",
+      "Responsive midsole",
+      "Breathable materials",
+      "Reflective elements for night safety",
+      "Wide size range"
+    ],
+    "variants": [
+      {
+        "color": "#e63946",
+        "colorName": "Red",
+        "stock": 5
+      },
+      {
+        "color": "#4a6fa5",
+        "colorName": "Blue",
+        "stock": 10
+      },
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 0
+      }
+    ]
+  },
+  {
+    "id": "product4",
+    "title": "Wireless Headphones",
+            "pageUrl": "running-shoes4.html",
+            "categories": ["shoes", "sports"],
+    "image": "button-image4.jpg",
+    "price": 104.99,
+    "originalPrice": 149.99,
+    "rating": "★★★★★",
+    "reviews": 89,
+    "description": "Lightweight wireless earbuds with secure fit for active lifestyles. Featuring IPX5 water resistance and touch controls, these earbuds deliver powerful sound whether you're working out or commuting. The charging case provides additional 20 hours of playtime.",
+    "features": [
+      "IPX5 water resistance",
+      "Touch controls",
+      "20-hour extended playtime",
+      "Secure fit for sports",
+      "Quick charge capability"
+    ],
+    "variants": [
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 2
+      },
+      {
+        "color": "#f4a261",
+        "colorName": "Sand",
+        "stock": 0
+      }
+    ]
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ,{
+    "id": "product1",
+    "title": "Running Shoes",
+        "pageUrl": "running-shoes.html",
+        "categories": ["shoes", "sports"], 
+    "image": "button-image7.jpg",
+    "price": 79.99,
+    "originalPrice": 133.32,
+    "rating": "★★★★☆",
+    "reviews": 124,
+    "description": "Lightweight wireless earbuds with secure fit for active lifestyles. Featuring IPX5 water resistance and touch controls, these earbuds deliver powerful sound whether you're working out or commuting. The charging case provides additional 20 hours of playtime.",
+    "features": [
+      "IPX5 water resistance",
+      "Touch controls",
+      "20-hour extended playtime",
+      "Secure fit for sports",
+      "Quick charge capability"
+    ],
+    "variants": [
+      {
+        "color": "#e63946",
+        "colorName": "Red",
+        "stock": 5
+      },
+      {
+        "color": "#4a6fa5",
+        "colorName": "Blue",
+        "stock": 10
+      },
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 0
+      }
+    ]
+  },
+  {
+    "id": "product2",
+    "title": "Wireless Headphones",
+        "pageUrl": "running-shoes2.html",
+         "categories": ["shoes", "electronics"],
+    "image": "button-image3.jpg",
+    "price": 104.99,
+    "originalPrice": 149.99,
+    "rating": "★★★★★",
+    "reviews": 89,
+    "description": "These high-performance running shoes are designed for maximum comfort and durability. Featuring advanced cushioning technology and breathable mesh upper, they provide excellent support for both short sprints and long-distance running. The rubber outsole offers superior traction on various surfaces.",
+    "features": [
+      "Breathable mesh upper",
+      "Advanced cushioning system",
+      "Durable rubber outsole",
+      "Lightweight design",
+      "Multiple color options"
+    ],
+    "variants": [
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 2
+      },
+      {
+        "color": "#f4a261",
+        "colorName": "Sand",
+        "stock": 0
+      }
+    ]
+  },
+  {
+    "id": "product3",
+    "title": "Running Shoes",
+            "pageUrl": "running-shoes3.html",
+             "categories": ["shoes", "sports"], 
+    "image": "button-image4.jpg",
+    "price": 79.99,
+    "originalPrice": 133.32,
+    "rating": "★★★★☆",
+    "reviews": 124,
+    "description": "Premium wireless headphones with active noise cancellation. Enjoy crystal-clear sound quality with deep bass and up to 30 hours of battery life. The comfortable over-ear design and built-in microphone make them perfect for both music lovers and professionals.",
+    "features": [
+      "Active noise cancellation",
+      "30-hour battery life",
+      "Built-in microphone",
+      "Bluetooth 5.0",
+      "Foldable design"
+    ],
+    "variants": [
+      {
+        "color": "#e63946",
+        "colorName": "Red",
+        "stock": 5
+      },
+      {
+        "color": "#4a6fa5",
+        "colorName": "Blue",
+        "stock": 10
+      },
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 0
+      }
+    ]
+  },
+  {
+    "id": "product4",
+    "title": "Wireless Headphones",
+            "pageUrl": "running-shoes4.html",
+            "categories": ["shoes", "sports"],
+    "image": "button-image5.jpg",
+    "price": 104.99,
+    "originalPrice": 149.99,
+    "rating": "★★★★★",
+    "reviews": 89,
+    "description": "Our latest model of running shoes combines style with functionality. The ergonomic design supports natural foot movement while the responsive midsole provides energy return with every step. Perfect for both training and casual wear.",
+    "features": [
+      "Ergonomic design",
+      "Responsive midsole",
+      "Breathable materials",
+      "Reflective elements for night safety",
+      "Wide size range"
+    ],
+    "variants": [
+      {
+        "color": "#333",
+        "colorName": "Black",
+        "stock": 2
+      },
+      {
+        "color": "#f4a261",
+        "colorName": "Sand",
+        "stock": 0
+      }
+    ]
+  }
+
+
+
+
+
+
+]
