@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Template with Stock Status</title>
+
+  <link rel="stylesheet" href="CSS/colors.css"> 
+
+  <link rel="stylesheet" href="CSS/debug overlay.css"> 
   <link rel="stylesheet" href="CSS/product card.css">
   <link rel="stylesheet" href="CSS/cover photo.css">
   <link rel="stylesheet" href="CSS/filter.css">
@@ -12,29 +16,25 @@
   <link rel="stylesheet" href="CSS/Footer.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-
-<style>
-
-</style>
-
-
 </head>
 <body>
 
-  <!-- Header with Shop Name, Search, and Cart -->
+  <!-- Reuse your header from main page -->
   <div class="header-container">
-    <div class="shop-name">Anime Shop</div>
+    <div class="shop-name" onclick="window.history.back()">Anime Shop</div>
     
     <div class="search-container">
       <input type="text" id="searchInput" placeholder="Search products...">
       <button id="searchButton">Search</button>
     </div>
     
-    <div class="cart-icon">
-      <i class="fas fa-shopping-cart"></i>
-      <span class="cart-count">1</span>
-    </div>
+<a href="cart.html" class="cart-icon">
+  <i class="fas fa-shopping-cart"></i>
+  <span class="cart-count">0</span>
+</a>
+
   </div>
+
 
   <!-- Cover Photo Carousel -->
   <div class="cover-carousel-container">
@@ -69,14 +69,16 @@
   <div class="filter-bar">
     <button class="filter-btn active" data-filter="all">All Products</button>
     <button class="filter-btn" data-filter="anime">Anime</button>
-    <button class="filter-btn" data-filter="shoes">Shoes</button>
-    <button class="filter-btn" data-filter="sports">Sports</button>
-    <button class="filter-btn" data-filter="electronics">Electronics</button>
+    <button class="filter-btn" data-filter="t-shirt">T-shirt</button>
+    <button class="filter-btn" data-filter="drop shoulder">Drop Shoulder</button>
+
   </div>
 
   <div class="products-container" id="productsContainer">
     <!-- Products will be inserted here by JavaScript -->
   </div>
+
+
 
 <!-- Footer Section -->
 <footer class="site-footer">
@@ -86,18 +88,6 @@
       <h3>About Anime Shop</h3>
       <p>Your one-stop shop for all anime-related merchandise, collectibles, and fan gear. We bring your favorite characters to life!</p>
     </div>
-    
-    <!-- Quick Links -->
-    <!-- <div class="footer-section">
-      <h3>Quick Links</h3>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="products.html">All Products</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="privacy.html">Privacy Policy</a></li>
-      </ul>
-    </div> -->
     
     <!-- Contact Info -->
     <div class="footer-section">
@@ -128,30 +118,20 @@
   </div>
 </footer>
 
-  <script src="JS/product card.js"></script>
+
+
+
   <script src="JS/filter.js"></script>
   <script src="JS/cover photo.js"></script>
   <script src="JS/Search ber.js"></script>
-  <!-- <script src="product-page.js"></script> -->
+  <script src="JS/product card.js"></script>
 
 
-<script>
 
-
-  
-</script>
-
-  <script>
-      // Cart functionality placeholder
-      const cartIcon = document.querySelector('.cart-icon');
-      cartIcon.addEventListener('click', function() {
-        console.log('Cart clicked - will implement cart functionality later');
-        // Future implementation will:
-        // 1. Show a modal with cart items
-        // 2. Update the cart count when items are added
-        // 3. Handle checkout process
-      });
-  </script>
+   <!-- Debug Overlay -->
+   <!-- <button id="clearCartBtn">Clear Cart (Test)</button>
+   <div id="cartDebugPanel"></div>
+   <script src="JS/cart-utils.js" defer></script> -->
 
 
 </body>
