@@ -74,8 +74,8 @@
     ],
     "mediaGallery": [
     { "type": "video", "src": "sample-video.mp4" },
-    { "type": "image", "src": "button-image1.png" },
-    { "type": "image", "src": "button-image2.png" }
+    { "type": "image", "src": "button-image4.png" },
+    { "type": "image", "src": "button-image3.png" }
   ],
   "variants": [
     {
@@ -124,8 +124,8 @@
     ],
     "mediaGallery": [
     { "type": "video", "src": "sample-video.mp4" },
-    { "type": "image", "src": "button-image1.png" },
-    { "type": "image", "src": "button-image2.png" }
+    { "type": "image", "src": "button-image2.png" },
+    { "type": "image", "src": "button-image1.png" }
   ],
 
   "variants": [
@@ -176,8 +176,8 @@
     ],
     "mediaGallery": [
     { "type": "video", "src": "sample-video.mp4" },
-    { "type": "image", "src": "button-image1.png" },
-    { "type": "image", "src": "button-image2.png" }
+    { "type": "image", "src": "button-image3.png" },
+    { "type": "image", "src": "button-image4.png" }
   ],
 
   "variants": [
@@ -207,5 +207,6 @@
 
 
 ]               
+
 
 
