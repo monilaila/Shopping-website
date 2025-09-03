@@ -39,7 +39,7 @@ main {
 
 
 
-/* .shop-name {
+.shop-name {
   font-size: 24px;
   font-weight: bold;
   color: var(--primary-color);
@@ -49,11 +49,11 @@ main {
   max-width: 150px; 
   flex-shrink: 0; 
   flex-grow: 0; 
-} */
-.shop-name {
+}
+/* .shop-name {
   font-size: 24px;
   font-weight: normal; 
-  font-family: 'Pacifico', cursive; /* Use Pacifico and a fallback */
+  font-family: 'Pacifico', cursive; 
   color: var(--primary-color);
   white-space: nowrap;
   overflow: hidden;
@@ -61,7 +61,7 @@ main {
   max-width: 150px;
   flex-shrink: 0;
   flex-grow: 0;
-}
+} */
 
 
 /* Cart Icon Styles */
@@ -223,4 +223,5 @@ main {
     font-size: 15px;
   }
 }
+
 
