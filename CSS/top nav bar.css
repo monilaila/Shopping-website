@@ -38,16 +38,29 @@ main {
 }
 
 
-.shop-name {
+
+/* .shop-name {
   font-size: 24px;
   font-weight: bold;
   color: var(--primary-color);
-  white-space: nowrap; /* Prevent name from breaking */
-  overflow: hidden; /* Hide overflow if text is too long */
-  text-overflow: ellipsis; /* Add ellipsis for hidden overflow */
-  max-width: 150px; /* Limit shop name width on smaller screens */
-  flex-shrink: 0; /* IMPORTANT: Prevent shop name from shrinking */
-  flex-grow: 0; /* Prevent shop name from growing */
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  max-width: 150px; 
+  flex-shrink: 0; 
+  flex-grow: 0; 
+} */
+.shop-name {
+  font-size: 24px;
+  font-weight: normal; 
+  font-family: 'Pacifico', cursive; /* Use Pacifico and a fallback */
+  color: var(--primary-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
 
@@ -171,20 +184,24 @@ main {
 
 /* Specific adjustments for mobile phones (up to 480px wide) */
 @media (max-width: 480px) {
+  /* .header-container {
+      padding: 14px 12px 0px;
+      gap: 6px;
+  } */
 
   .shop-name {
-      font-size: 17px;
+      font-size: 18px;
       max-width: 105px;
   }
 
   .cart-icon {
-    font-size: 18px;
+    font-size: 28px;
   }
 
   .cart-count {
-    width: 16px;
-    height: 16px;
-    font-size: 9px;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
     top: -6px;
     right: -6px;
   }
@@ -203,17 +220,7 @@ main {
 
   #searchButton {
     padding: 6px 10px;
-    font-size: 12px;
+    font-size: 15px;
   }
 }
-
-
-
-
-
-
-
-
-
-
 
