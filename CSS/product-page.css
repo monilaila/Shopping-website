@@ -472,3 +472,49 @@ align-items: center;
 .media-modal .close-btn { top: 20px; right: 20px; }
 .media-modal .prev-btn { left: 20px; top: 50%; transform: translateY(-50%); }
 .media-modal .next-btn { right: 20px; top: 50%; transform: translateY(-50%); }
+
+
+
+
+
+
+
+
+
+
+/* --- Toast Popup (Upgraded Style) --- */
+
+.toast.show {
+    opacity: 1;
+    pointer-events: auto;
+    top: 51px;
+    transform: translateX(-10%) scale(1);
+    cursor: pointer;
+}
+
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 59%;
+    transform: translateX(-50%) scale(0.9);
+    background: linear-gradient(135deg, #4caf50, #43a047);
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    display: flex ;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 9999;
+}
+
+/* Optional success icon */
+.toast::before {
+  content: "✔";
+  font-weight: bold;
+}
