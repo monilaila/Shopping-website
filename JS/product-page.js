@@ -310,13 +310,38 @@ addToCartBtn.addEventListener('click', function () {
     });
   }
 
-CartUtils.saveCart(cart);
-CartUtils.updateCartCount();
+  CartUtils.saveCart(cart);
+  CartUtils.updateCartCount();
 
-  // feedback 
-  console.log(`${quantity} ${product.title}${details ? ` (${details})` : ''} added to cart!`);
 
+
+
+  // --- Toast Feedback ---
+  const details = [
+    selectedVariant.colorName,
+    selectedVariant.size ? `Size ${selectedVariant.size}` : null
+  ].filter(Boolean).join(', ');
+
+  showToast(`${quantity} ${product.title}${details ? ` (${details})` : ''} added to cart!`);
+
+  // --- Prevent double clicks for 1 second ---
+  this.disabled = true;
+  setTimeout(() => {
+    this.disabled = false;
+  }, 1000);
 });
+
+
+
+
+
+// CartUtils.saveCart(cart);
+// CartUtils.updateCartCount();
+
+//   // feedback 
+//   console.log(`${quantity} ${product.title}${details ? ` (${details})` : ''} added to cart!`);
+
+// });
 
     // --- GALLERY FUNCTIONS ---
     function initImageGallery(images) {
@@ -421,7 +446,50 @@ CartUtils.updateCartCount();
     }
 
   }
+
+
+
+
+// --- Toast Notification ---
+function showToast(message) {
+  // Remove any existing toast first
+  const existingToast = document.getElementById('toast');
+  if (existingToast) {
+    existingToast.remove();
+  }
+
+  // Create a new toast element
+  const toast = document.createElement('div');
+  toast.id = 'toast';
+  toast.className = 'toast show';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  // Auto-close in 1 second
+  const autoClose = setTimeout(() => {
+    toast.classList.remove('show');
+    toast.remove();
+  }, 1000);
+
+  // Close immediately if user clicks anywhere
+  function hideToast() {
+    clearTimeout(autoClose);
+    toast.classList.remove('show');
+    toast.remove();
+    document.removeEventListener('click', hideToast);
+  }
+
+  setTimeout(() => {
+    document.addEventListener('click', hideToast, { once: true });
+  }, 50);
+}
+
+
+
+
 });
+
+
 
 
 
