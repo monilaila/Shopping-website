@@ -46,8 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
               ${hasColorVariants ? `<div class="color-availability">${colorDots}</div>` : ''}
               <div class="product-price">
-                <span class="original-price">$${product.originalPrice.toFixed(2)}</span>
-                <span class="current-price">$${product.price.toFixed(2)}</span>
+                <span class="original-price">৳${product.originalPrice.toFixed(2)}</span>
+                <span class="current-price">৳${product.price.toFixed(2)}</span>
               </div>
             </div>
           </a>
