@@ -82,7 +82,7 @@
 
 <script>
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const deliveryCharge = 50; // example delivery fee
+  const deliveryCharge = 50;
   let totalAmount = 0;
   const receiptDiv = document.getElementById("receipt");
 
@@ -119,7 +119,6 @@
     `;
   }
 
-  // Function to clear all product-related data
   function clearCartData() {
     localStorage.removeItem("cart");
     if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
@@ -134,28 +133,29 @@
       link.download = "receipt.png";
       link.href = canvas.toDataURL("image/png");
       link.click();
-
       clearCartData();
     });
   });
 
-  // Back/Home button clears cart and redirects
+  // Home button clears cart and redirects
   document.getElementById("homeBtn").addEventListener("click", () => {
     clearCartData();
     window.location.href = "index.html";
   });
 
-  // Clear cart if user navigates back with browser button
+  // ✅ Force redirect to index.html if user presses BACK (desktop + mobile)
+  history.pushState(null, null, location.href);
   window.addEventListener("popstate", () => {
     clearCartData();
-    window.location.href = "index.html";
+    window.location.replace("index.html");
   });
 
-  // Clear cart if user closes tab or refreshes
+  // Clear cart if user refreshes or closes tab
   window.addEventListener("beforeunload", () => {
     clearCartData();
   });
 </script>
+
 
 
 
