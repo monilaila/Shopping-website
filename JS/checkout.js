@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cart = (typeof CartUtils !== "undefined" && CartUtils.getCart) ? CartUtils.getCart() : [];
     if (!cart || cart.length === 0) {
         alert("Your cart is empty! Redirecting to homepage...");
-        window.location.href = "home.html"; // replace with your homepage URL
+        window.location.href = "index.html"; // replace with your homepage URL
         return; // stop further execution
     }
 
@@ -362,6 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 }) ();
+
 
 
 
