@@ -125,8 +125,8 @@ document.addEventListener('DOMContentLoaded', function () {
             ${product.rating} <span class="review-count">(${product.reviews} reviews)</span>
           </div>
           <div class="price-container">
-            <span class="current-price">$${product.price.toFixed(2)}</span>
-            <span class="original-price">$${product.originalPrice.toFixed(2)}</span>
+            <span class="current-price">৳${product.price.toFixed(2)}</span>
+            <span class="original-price">৳${product.originalPrice.toFixed(2)}</span>
             <span class="discount-percentage">${((product.originalPrice - product.price) / product.originalPrice * 100).toFixed(0)}% OFF</span>
           </div>
           ${product.variants && product.variants.length > 0 ? `
@@ -264,14 +264,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    
-
-
-
-
-
-
-
 addToCartBtn.addEventListener('click', function () {
   if (!selectedVariant || this.disabled) return;
 
@@ -304,17 +296,13 @@ addToCartBtn.addEventListener('click', function () {
       size: selectedVariant.size,
       quantity,
       price: product.price,
-      // keep stock so the cart page can enforce limits later
-     stock: selectedVariant.stock,
-     image: product.image // ✅ store image for cart page    
+      stock: selectedVariant.stock,
+      image: product.image
     });
   }
 
   CartUtils.saveCart(cart);
   CartUtils.updateCartCount();
-
-
-
 
   // --- Toast Feedback ---
   const details = [
@@ -332,16 +320,7 @@ addToCartBtn.addEventListener('click', function () {
 });
 
 
-
-
-
-// CartUtils.saveCart(cart);
-// CartUtils.updateCartCount();
-
-//   // feedback 
-//   console.log(`${quantity} ${product.title}${details ? ` (${details})` : ''} added to cart!`);
-
-// });
+  // feedback 
 
     // --- GALLERY FUNCTIONS ---
     function initImageGallery(images) {
@@ -435,8 +414,8 @@ addToCartBtn.addEventListener('click', function () {
                 <div class="product-review">${product.rating} <span class="review-count">(${product.reviews} reviews)</span></div>
                 <div class="color-availability">${colorOptions}</div>
                 <div class="product-price">
-                  <span class="original-price">$${product.originalPrice.toFixed(2)}</span>
-                  <span class="current-price">$${product.price.toFixed(2)}</span>
+                  <span class="original-price">৳${product.originalPrice.toFixed(2)}</span>
+                  <span class="current-price">৳${product.price.toFixed(2)}</span>
                 </div>
               </div>
             </a>
@@ -446,8 +425,6 @@ addToCartBtn.addEventListener('click', function () {
     }
 
   }
-
-
 
 
 // --- Toast Notification ---
@@ -483,15 +460,6 @@ function showToast(message) {
     document.addEventListener('click', hideToast, { once: true });
   }, 50);
 }
-
-
-
-
 });
-
-
-
-
-
 
 
