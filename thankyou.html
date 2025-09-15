@@ -81,16 +81,18 @@
   </div>
 
 <script>
-  // ✅ Load from sessionStorage (temporary storage)
-  const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+  // Step 1: Read cart data ONCE and clear storage immediately
+  const tempCart = JSON.parse(localStorage.getItem("cart")) || [];
+  localStorage.removeItem("cart"); // delete permanently right away
+
   const deliveryCharge = 50;
   let totalAmount = 0;
   const receiptDiv = document.getElementById("receipt");
 
-  if (cart.length === 0) {
+  if (tempCart.length === 0) {
     receiptDiv.innerHTML = `<p class="text-gray-500 text-center">No products found in your order.</p>`;
   } else {
-    cart.forEach((item, index) => {
+    tempCart.forEach((item, index) => {
       const itemTotal = item.price * item.quantity;
       totalAmount += itemTotal;
 
@@ -113,25 +115,18 @@
       receiptDiv.appendChild(productDiv);
     });
 
-    const totalDiv = document.getElementById("totalCharge");
-    totalDiv.innerHTML = `
+    document.getElementById("totalCharge").innerHTML = `
       <p>Delivery Charge: ৳${deliveryCharge.toFixed(2)}</p>
       <p class="text-xl font-bold mt-2">Grand Total: ৳${(totalAmount + deliveryCharge).toFixed(2)}</p>
     `;
   }
 
-  // ✅ Immediately clear sessionStorage after rendering
-  sessionStorage.removeItem("cart");
-
-  // Function to clear all product-related data (safety)
+  // Function to clear (though it's already cleared when page loaded)
   function clearCartData() {
-    sessionStorage.removeItem("cart");
-    if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
-      CartUtils.updateCartCount();
-    }
+    localStorage.removeItem("cart");
   }
 
-  // Download receipt as PNG AND clear data
+  // Download PNG
   document.getElementById("downloadBtn").addEventListener("click", () => {
     html2canvas(document.getElementById("receiptContainerWrapper")).then(canvas => {
       const link = document.createElement("a");
@@ -142,24 +137,22 @@
     });
   });
 
-  // Home button clears data and redirects
+  // Back/Home button clears and redirects
   document.getElementById("homeBtn").addEventListener("click", () => {
     clearCartData();
     window.location.href = "index.html";
   });
 
-  // ✅ Block browser/mobile BACK button → send home
+  // If user presses back (desktop or mobile) → always redirect to home
   history.pushState(null, null, location.href);
   window.addEventListener("popstate", () => {
     clearCartData();
     window.location.replace("index.html");
   });
 
-  // Clear data on refresh or tab close
-  window.addEventListener("beforeunload", () => {
-    clearCartData();
-  });
+  // If user refreshes → data is already gone (because we cleared it at the start)
 </script>
+
 
 
 
