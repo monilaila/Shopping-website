@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gent Bros</title>
+    <link rel="icon" type="logos/ico" href="logo_64.ico">
+  <link rel="stylesheet" href="CSS/colors.css">
+  <link rel="stylesheet" href="CSS/debug overlay.css">  
+  <link rel="stylesheet" href="CSS/product-page.css">
+  <link rel="stylesheet" href="CSS/product card.css">
+  <link rel="stylesheet" href="CSS/top nav bar.css">
+  <link rel="stylesheet" href="CSS/Footer.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+</head>
+<body>
+  <!-- Reuse your header from main page -->
+  <div class="header-wrapper">
+   <div class="header-container">
+ 
+     <div onclick="window.location.href='index.html'">
+      <div>
+     <span class="text-lg font-semibold"><img src="logos/logo.svg" alt="Logo"></span>
+      </div>
+    </div>
+     
+     <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search products...">
+      <button id="searchButton">Search</button>
+     </div>
+     <div class="cart-icon">
+  <a href="cart.html" class="cart-icon">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="cart-count">0</span>
+  </a>
+      </div>
+    </div>
+   </div>
+
+
+
+
+
+  <!-- Product content will be inserted here -->
+  <div class="product-page-container" id="productPageContainer"></div>
+
+
+
+
+
+
+<!-- Footer Section -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <!-- About Section -->
+    <div class="footer-section">
+      <h3>About GENT BROS</h3>
+      <p>Your one-stop shop for all anime-related merchandise, collectibles, and fan gear. We bring your favorite characters to life!</p>
+    </div>
+    
+    <!-- Contact Info -->
+    <div class="footer-section">
+      <h3>Contact Us</h3>
+      <ul class="contact-info">
+        <li><i class="fas fa-phone"></i> +1 (123) 456-7890</li>
+        <li><i class="fas fa-envelope"></i> info@animeshop.com</li>
+        <li><i class="fas fa-map-marker-alt"></i> 123 Otaku Street, Tokyo, Japan</li>
+      </ul>
+    </div>
+    
+    <!-- Social Media -->
+    <div class="footer-section">
+      <h3>Follow Us</h3>
+      <div class="social-links">
+        <a href="https://www.facebook.com/" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="https://x.com/" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/" aria-label="youtube/"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.tiktok.com/" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Copyright -->
+  <div class="copyright">
+    <p>&copy; 2023 GENT BROS. All rights reserved.</p>
+  </div>
+</footer>
+
+
+
+ <!-- <script src="JS/product-page.js"></script> -->
+
+   <script src="JS/product-page.js" defer></script>
+   <script src="JS/cart-utils.js" defer></script>
+
+
+
+   <!-- Debug Overlay -->
+   <!-- <button id="clearCartBtn">Clear Cart (Test)</button>
+   <div id="cartDebugPanel"></div> -->
+
+<!-- Toast Popup -->
+<div id="toast" class="toast"></div>
+
+
+
+</body>
+</html>

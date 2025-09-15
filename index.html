@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gent Bros</title>
+    <link rel="icon" type="ico" href="logos/favicon.ico">
+
+  <link rel="stylesheet" href="CSS/colors.css"> 
+
+  <link rel="stylesheet" href="CSS/debug overlay.css"> 
+  <link rel="stylesheet" href="CSS/product card.css">
+  <link rel="stylesheet" href="CSS/cover photo.css">
+  <link rel="stylesheet" href="CSS/filter.css">
+  <link rel="stylesheet" href="CSS/top nav bar.css">
+  <link rel="stylesheet" href="CSS/products container.css">
+  <link rel="stylesheet" href="CSS/Footer.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+
+  <!-- Reuse your header from main page -->
+  <div class="header-container">
+    <div class="shop-name" onclick="window.history.back()"><img src="logos/logo.svg"  alt="Logo"></div>
+
+
+    
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search products...">
+      <button id="searchButton">Search</button>
+    </div>
+    
+    <a href="cart.html" class="cart-icon">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-count">0</span>
+    </a>
+
+  </div>
+
+
+  <!-- Cover Photo Carousel -->
+  <div class="cover-carousel-container">
+    <div class="cover-carousel">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide">
+          <a href="promo1.html">
+            <img src="image/cover 1.jpg" 
+                 alt="Promotion 1"
+                 loading="lazy">
+          </a>
+        </div>
+        <div class="carousel-slide">
+          <a href="promo2.html">
+            <img src="image/cover 2.jpg" 
+                 alt="Promotion 2"
+                 loading="lazy">
+          </a>
+        </div>
+        <div class="carousel-slide">
+          <a href="promo3.html">
+            <img src="image/cover 3.jpg" 
+                 alt="Promotion 3"
+                 loading="lazy">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Buttons -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All Products</button>
+    <button class="filter-btn" data-filter="anime">Anime</button>
+    <button class="filter-btn" data-filter="t-shirt">T-shirt</button>
+    <button class="filter-btn" data-filter="drop shoulder">Drop Shoulder</button>
+
+  </div>
+
+  <div class="products-container" id="productsContainer">
+    <!-- Products will be inserted here by JavaScript -->
+  </div>
+
+
+
+<!-- Footer Section -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <!-- About Section -->
+    <div class="footer-section">
+      <h3>About GENT BROS</h3>
+      <p>Your one-stop shop for all anime-related merchandise, collectibles, and fan gear. We bring your favorite characters to life!</p>
+    </div>
+    
+    <!-- Contact Info -->
+    <div class="footer-section">
+      <h3>Contact Us</h3>
+      <ul class="contact-info">
+        <li><i class="fas fa-phone"></i> +1 (123) 456-7890</li>
+        <li><i class="fas fa-envelope"></i> info@animeshop.com</li>
+        <li><i class="fas fa-map-marker-alt"></i> 123 Otaku Street, Tokyo, Japan</li>
+      </ul>
+    </div>
+    
+    <!-- Social Media -->
+    <div class="footer-section">
+      <h3>Follow Us</h3>
+      <div class="social-links">
+        <a href="https://www.facebook.com/" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="https://x.com/" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/" aria-label="youtube/"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.tiktok.com/" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Copyright -->
+  <div class="copyright">
+    <p>&copy; 2023 GENT BROS. All rights reserved.</p>
+  </div>
+</footer>
+
+
+
+
+  <script src="JS/filter.js"></script>
+  <script src="JS/cover photo.js"></script>
+  <script src="JS/Search ber.js"></script>
+  <script src="JS/product card.js"></script>
+   <script src="JS/cart-utils.js" defer></script>
+
+
+   <!-- Debug Overlay -->
+   <button id="clearCartBtn">Clear Cart (Test)</button>
+   <div id="cartDebugPanel"></div>
+
+
+
+</body>
+</html>
+
