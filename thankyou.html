@@ -5,19 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gent Bros</title>
 
-
+  <!-- Disable caching to prevent bfcache from showing old data -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="CSS/colors.css">
-  <!-- html2canvas for PNG download -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
   <style>
-    /* Ensure receiptContainer includes top bar visually for PNG */
-    #receiptContainerWrapper {
-      position: relative;
-      width: 100%;
-      max-width: 768px;
-    }
+    #receiptContainerWrapper { position: relative; width: 100%; max-width: 768px; }
     #topBarClone {
       width: 100%;
       background: var(--primary-color);
@@ -30,15 +28,12 @@
       margin-bottom: -11px;
       border-radius: 1rem 1rem 0 0;
     }
-    /* Optional: prevent actual fixed bar from overlapping */
-    body > #topBarActual {
-      z-index: 1000;
-    }
+    body > #topBarActual { z-index: 1000; }
   </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col items-center justify-start pt-24 p-4">
 
-  <!-- Actual Top Bar (fixed) -->
+  <!-- Fixed top bar -->
   <div id="topBarActual" onclick="window.location.href='index.html'" 
        class="w-full fixed top-0 left-0 bg-[var(--primary-color)] text-[var(--text-light)] shadow-md cursor-pointer">
     <div class="max-w-4xl mx-auto px-4 py-3 flex items-center">
@@ -46,25 +41,18 @@
     </div>
   </div>
 
-  <!-- Receipt + cloned top bar for PNG -->
+  <!-- Receipt wrapper + top bar clone for PNG -->
   <div id="receiptContainerWrapper">
-    <!-- Cloned Top Bar for PNG -->
-   <div id="topBarClone" class="flex items-center justify-center space-x-2">
-     <img src="logos/logo_w.svg" alt="Logo" style="height:24px; cursor:pointer; " onclick="window.location.href='index.html'">
-     <span class="text-white font-semibold text-lg">Gent Bros</span>
-   </div>
-
+    <div id="topBarClone" class="flex items-center justify-center space-x-2">
+      <img src="logos/logo_w.svg" alt="Logo" style="height:24px; cursor:pointer;" onclick="window.location.href='index.html'">
+      <span class="text-white font-semibold text-lg">Gent Bros</span>
+    </div>
 
     <div id="receiptContainer" class="bg-white shadow-xl rounded-2xl w-full p-8">
       <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Thank You for Your Order!</h2>
 
-      <div id="receipt" class="space-y-4">
-        <!-- Products will be injected here -->
-      </div>
-
-      <div id="totalCharge" class="mt-6 text-right text-lg font-semibold text-gray-800">
-        <!-- Total delivery + order will appear here -->
-      </div>
+      <div id="receipt" class="space-y-4"></div>
+      <div id="totalCharge" class="mt-6 text-right text-lg font-semibold text-gray-800"></div>
 
       <div class="mt-8 flex justify-center space-x-4">
         <button id="homeBtn" 
@@ -81,9 +69,9 @@
   </div>
 
 <script>
-  // Step 1: Read cart data ONCE and clear storage immediately
+  // --- TEMPORARY ORDER DATA ---
   const tempCart = JSON.parse(localStorage.getItem("cart")) || [];
-  localStorage.removeItem("cart"); // delete permanently right away
+  localStorage.removeItem("cart"); // delete permanently
 
   const deliveryCharge = 50;
   let totalAmount = 0;
@@ -111,7 +99,6 @@
         </div>
         <div class="font-semibold">৳${itemTotal.toFixed(2)}</div>
       `;
-
       receiptDiv.appendChild(productDiv);
     });
 
@@ -121,10 +108,7 @@
     `;
   }
 
-  // Function to clear (though it's already cleared when page loaded)
-  function clearCartData() {
-    localStorage.removeItem("cart");
-  }
+  function clearCartData() { localStorage.removeItem("cart"); }
 
   // Download PNG
   document.getElementById("downloadBtn").addEventListener("click", () => {
@@ -137,26 +121,27 @@
     });
   });
 
-  // Back/Home button clears and redirects
+  // Back/Home button
   document.getElementById("homeBtn").addEventListener("click", () => {
     clearCartData();
     window.location.href = "index.html";
   });
 
-  // If user presses back (desktop or mobile) → always redirect to home
+  // Always redirect back to home if user navigates back
   history.pushState(null, null, location.href);
   window.addEventListener("popstate", () => {
     clearCartData();
     window.location.replace("index.html");
   });
 
-  // If user refreshes → data is already gone (because we cleared it at the start)
+  // Pageshow event handles bfcache (mobile back button)
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) {
+      clearCartData();
+      window.location.replace("index.html");
+    }
+  });
 </script>
-
-
-
-
-
 
 </body>
 </html>
