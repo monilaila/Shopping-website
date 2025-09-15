@@ -1,3 +1,9 @@
+
+(function () {
+  // --- CONFIG ---
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyokOceeMG8d9qoenAOc75lsctFYZss_003XxO-iToUI_Atry16yKU_u-xA2USIXsiUNQ/exec";
+
+  // --- DATA (district -> upazila) ---
     const data = {
         "বাগেরহাট": ["বাগেরহাট সদর", "চিতলমারী", "ফকিরহাট", "কচুয়া", "মোল্লাহাট", "মোংলা", "মোড়েলগঞ্জ", "রামপাল", "শরণখোলা"],
         "বান্দরবান": ["আলীকদম", "বান্দরবান সদর", "লামা", "নাইক্ষ্যংছড়ি", "রোয়াংছড়ি", "রুমা", "থানচি"],
@@ -65,6 +71,7 @@
         "ঠাকুরগাঁও": ["বালিয়াডাঙ্গী", "হরিপুর", "পীরগঞ্জ", "রাণীশংকৈল", "ঠাকুরগাঁও সদর"]
     };
 
+  // --- DOM REFS ---
   const districtBtn = document.getElementById("districtBtn");
   const districtMenu = document.getElementById("districtMenu");
   const districtText = document.getElementById("districtText");
@@ -75,56 +82,88 @@
   const upazilaText = document.getElementById("upazilaText");
   const upazilaList = document.getElementById("upazilaList");
 
+  const fullNameInput = document.getElementById("fullName");
+  const phoneNumberInput = document.getElementById("phoneNumber");
+  const streetAddressInput = document.getElementById("streetAddress");
+  const additionalNotesInput = document.getElementById("additionalNotes");
+  const couponCodeInput = document.getElementById("couponCode");
+  const checkoutForm = document.getElementById("checkoutForm");
+  const loadingOverlay = document.getElementById("loadingOverlay");
+  const successOverlay = document.getElementById("successOverlay");
+
+  // --- STATE ---
   let selectedDistrict = "";
   let selectedUpazila = "";
 
-  // Populate District List
-  Object.keys(data).sort().forEach(district => {
-    const li = document.createElement("li");
-    li.textContent = district;
-    li.className = "px-4 py-2 hover:bg-indigo-100 cursor-pointer";
-    districtList.appendChild(li);
-
-    li.addEventListener("click", () => {
-      selectedDistrict = district;
-      districtText.textContent = district;
-      districtMenu.classList.add("hidden");
-
-      // Enable Upazila Selector
-      upazilaBtn.disabled = false;
-      upazilaBtn.classList.remove("bg-gray-100","text-gray-500");
-      upazilaBtn.classList.add("bg-gray-50","hover:bg-gray-100","text-gray-700");
-      upazilaText.textContent = "উপজেলা নির্বাচন করুন";
-
-      // Populate Upazila List
-      upazilaList.innerHTML = "";
-      data[district].sort().forEach(upazila => {
-        const uli = document.createElement("li");
-        uli.textContent = upazila;
-        uli.className = "px-4 py-2 hover:bg-indigo-100 cursor-pointer";
-        upazilaList.appendChild(uli);
-
-        uli.addEventListener("click", () => {
-          selectedUpazila = upazila;
-          upazilaText.textContent = upazila;
-          upazilaMenu.classList.add("hidden");
-        });
-      });
+  // --- HELPERS: populate lists ---
+  function populateDistricts() {
+    districtList.innerHTML = "";
+    Object.keys(data).sort().forEach(district => {
+      const li = document.createElement("li");
+      li.textContent = district;
+      li.className = "px-4 py-2 hover:bg-indigo-100 cursor-pointer";
+      districtList.appendChild(li);
     });
+  }
+
+  function populateUpazilas(district) {
+    upazilaList.innerHTML = "";
+    if (!district || !data[district]) return;
+    data[district].sort().forEach(up => {
+      const li = document.createElement("li");
+      li.textContent = up;
+      li.className = "px-4 py-2 hover:bg-indigo-100 cursor-pointer";
+      upazilaList.appendChild(li);
+    });
+  }
+
+  // initialize district list
+  populateDistricts();
+
+  // --- Event Delegation: district selection ---
+  districtList.addEventListener("click", (e) => {
+    const li = e.target.closest("li");
+    if (!li) return;
+    selectedDistrict = li.textContent.trim();
+    districtText.textContent = selectedDistrict;
+    districtMenu.classList.add("hidden");
+
+    // enable upazila button and populate upazila list
+    upazilaBtn.disabled = false;
+    upazilaBtn.classList.remove("bg-gray-100", "text-gray-500");
+    upazilaBtn.classList.add("bg-gray-50", "hover:bg-gray-100", "text-gray-700");
+    upazilaText.textContent = "উপজেলা নির্বাচন করুন";
+    selectedUpazila = "";
+    populateUpazilas(selectedDistrict);
   });
 
-  // Toggle dropdowns
-  districtBtn.addEventListener("click", () => {
-    districtMenu.classList.toggle("hidden");
+  // --- Event Delegation: upazila selection ---
+  upazilaList.addEventListener("click", (e) => {
+    const li = e.target.closest("li");
+    if (!li) return;
+    selectedUpazila = li.textContent.trim();
+    upazilaText.textContent = selectedUpazila;
+    upazilaMenu.classList.add("hidden");
   });
-  upazilaBtn.addEventListener("click", () => {
+
+  // --- Toggle dropdowns ---
+  districtBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    districtMenu.classList.toggle("hidden");
+    // ensure other menu closed
+    upazilaMenu.classList.add("hidden");
+  });
+
+  upazilaBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
     if (!upazilaBtn.disabled) {
       upazilaMenu.classList.toggle("hidden");
+      districtMenu.classList.add("hidden");
     }
   });
 
-  // Close menus when clicking outside
-  window.addEventListener("click", (e) => {
+  // --- Close when clicking outside ---
+  document.addEventListener("click", (e) => {
     if (!districtBtn.contains(e.target) && !districtMenu.contains(e.target)) {
       districtMenu.classList.add("hidden");
     }
@@ -133,57 +172,187 @@
     }
   });
 
-
-
-
-
-// fetch success block,
-
-
-
-
+  // --- Restore saved data on load ---
 document.addEventListener("DOMContentLoaded", () => {
-  const saved = CartUtils.getCheckoutData();
-  if (saved) {
-    // ✅ Refill required text fields
-    document.getElementById("fullName").value = saved.Name || "";
-    document.getElementById("phoneNumber").value = saved.PhoneNumber || "";
-    document.getElementById("streetAddress").value = saved.StreetAddress || "";
+    // --- 1. Check if cart has products ---
+    const cart = (typeof CartUtils !== "undefined" && CartUtils.getCart) ? CartUtils.getCart() : [];
+    if (!cart || cart.length === 0) {
+        alert("Your cart is empty! Redirecting to homepage...");
+        window.location.href = "home.html"; // replace with your homepage URL
+        return; // stop further execution
+    }
+
+    // --- 2. Restore saved checkout data if available ---
+    const saved = (typeof CartUtils !== "undefined" && CartUtils.getCheckoutData) ? CartUtils.getCheckoutData() : null;
+    if (!saved) return;
+
+    fullNameInput.value = saved.Name || "";
+    phoneNumberInput.value = saved.PhoneNumber || "";
+    streetAddressInput.value = saved.StreetAddress || "";
+
+    // optional fields
+    if (saved.AdditionalNotes) additionalNotesInput.value = saved.AdditionalNotes;
+    if (saved.CouponCode) couponCodeInput.value = saved.CouponCode;
 
     // Restore district & upazila
-    if (saved["District&Upazila"]) {
-      selectedDistrict = saved["District&Upazila"].District || "";
-      selectedUpazila = saved["District&Upazila"].Upazila || "";
-
-      if (selectedDistrict) {
-        districtText.textContent = selectedDistrict;
-
-        // Enable & populate upazila list again
-        upazilaBtn.disabled = false;
-        upazilaBtn.classList.remove("bg-gray-100","text-gray-500");
-        upazilaBtn.classList.add("bg-gray-50","hover:bg-gray-100","text-gray-700");
-
-        upazilaList.innerHTML = "";
-        data[selectedDistrict].sort().forEach(up => {
-          const uli = document.createElement("li");
-          uli.textContent = up;
-          uli.className = "px-4 py-2 hover:bg-indigo-100 cursor-pointer";
-          upazilaList.appendChild(uli);
-
-          uli.addEventListener("click", () => {
-            selectedUpazila = up;
-            upazilaText.textContent = up;
-            upazilaMenu.classList.add("hidden");
-          });
-        });
-
-        // Restore selected upazila text
-        if (selectedUpazila) {
-          upazilaText.textContent = selectedUpazila;
+    if (saved.DistrictAndUpazila) {
+        selectedDistrict = saved.DistrictAndUpazila.District || "";
+        selectedUpazila = saved.DistrictAndUpazila.Upazila || "";
+        if (selectedDistrict) {
+            districtText.textContent = selectedDistrict;
+            upazilaBtn.disabled = false;
+            upazilaBtn.classList.remove("bg-gray-100", "text-gray-500");
+            upazilaBtn.classList.add("bg-gray-50", "hover:bg-gray-100", "text-gray-700");
+            populateUpazilas(selectedDistrict);
+            if (selectedUpazila) {
+                upazilaText.textContent = selectedUpazila;
+            }
         }
-      }
     }
-  }
 });
 
+
+  // --- Validation helpers ---
+  const requiredElements = [fullNameInput, phoneNumberInput, districtBtn, upazilaBtn, streetAddressInput];
+
+  function resetValidation() {
+    requiredElements.forEach(el => {
+      el.classList.remove("border-red-500", "ring-2", "ring-red-400");
+      el.removeAttribute("aria-invalid");
+    });
+  }
+
+  function markInvalid(el) {
+    el.classList.add("border-red-500", "ring-2", "ring-red-400");
+    el.setAttribute("aria-invalid", "true");
+  }
+
+  function validateForm() {
+    resetValidation();
+    const errors = [];
+
+    if (!fullNameInput.value.trim()) errors.push(fullNameInput);
+    if (!phoneNumberInput.value.trim()) errors.push(phoneNumberInput);
+    if (!selectedDistrict) errors.push(districtBtn);
+    if (!selectedUpazila) errors.push(upazilaBtn);
+    if (!streetAddressInput.value.trim()) errors.push(streetAddressInput);
+
+    if (errors.length) {
+      errors.forEach(markInvalid);
+      // Focus the first invalid element and scroll into view
+      const first = errors[0];
+      try {
+        first.focus();
+      } catch (err) { /* ignore focus errors */ }
+      first.scrollIntoView({ behavior: "smooth", block: "center" });
+      return false;
+    }
+    return true;
+  }
+
+  // --- Submit handler ---
+  checkoutForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // run validation — if invalid, stop and do NOT send
+    if (!validateForm()) {
+      return;
+    }
+
+    // Build payload (same structure as your existing code)
+    const cart = (typeof CartUtils !== "undefined" && CartUtils.getCart) ? CartUtils.getCart() : [];
+    const delivery = (typeof CartUtils !== "undefined" && CartUtils.getDeliveryChoice) ? CartUtils.getDeliveryChoice() : "unknown";
+
+    const fullName = fullNameInput.value.trim();
+    const phoneNumber = phoneNumberInput.value.trim();
+    const streetAddress = streetAddressInput.value.trim();
+    const additionalNotes = additionalNotesInput.value.trim();
+    const couponCode = couponCodeInput.value.trim();
+
+    const ids = cart.map(i => i.id).join(",");
+    const titles = cart.map(i => i.title).join(",");
+    const images = cart.map(i => (i.image ? i.image.split("/").pop() : "none")).join(",");
+    const prices = cart.map(i => `৳${i.price}`).join(",");
+
+    const products = JSON.stringify(cart.map(i => ({
+      colorName: i.color || null,
+      size: i.size || null,
+      quantity: i.quantity
+    })));
+
+    const districtData = JSON.stringify([
+      { District: selectedDistrict || "" },
+      { Upazila: selectedUpazila || "" }
+    ]);
+
+    const optionInformation = JSON.stringify({
+      AdditionalNotes: additionalNotes || "",
+      CouponCode: couponCode || ""
+    });
+
+    const params = new URLSearchParams({
+      path: "Sheet1",
+      action: "write",
+      id: ids,
+      title: titles,
+      image: images,
+      price: prices,
+      myArea: delivery || "unknown",
+      name: fullName,
+      PhoneNumber: phoneNumber,
+      StreetAddress: streetAddress,
+      products,
+      districtData,
+      optionInformation
+    });
+
+    // disable submit button to prevent duplicate clicks
+    const submitBtn = checkoutForm.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add("opacity-60", "cursor-not-allowed");
+    }
+
+    // show loading overlay and send
+    if (loadingOverlay) loadingOverlay.classList.remove("hidden");
+
+    fetch(`${SCRIPT_URL}?${params.toString()}`)
+      .then(res => res.text())
+      .then(txt => {
+        if (loadingOverlay) loadingOverlay.classList.add("hidden");
+        if (successOverlay) successOverlay.classList.remove("hidden");
+
+  
+    if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
+        CartUtils.updateCartCount(); // optional: updates cart counter visually
+    }
+
+        // Save checkout data (persist last successful submission)
+        if (typeof CartUtils !== "undefined" && CartUtils.saveCheckoutData) {
+          CartUtils.saveCheckoutData({
+            Name: fullName,
+            PhoneNumber: phoneNumber,
+            DistrictAndUpazila: { District: selectedDistrict, Upazila: selectedUpazila },
+            StreetAddress: streetAddress,
+            AdditionalNotes: additionalNotes,
+            CouponCode: couponCode
+          });
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove("opacity-60", "cursor-not-allowed");
+        }
+      })
+      .catch(err => {
+        if (loadingOverlay) loadingOverlay.classList.add("hidden");
+        alert("❌ Error sending order: " + (err && err.message ? err.message : err));
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove("opacity-60", "cursor-not-allowed");
+        }
+      });
+  });
+
+})();
 
