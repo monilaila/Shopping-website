@@ -3,8 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Checkout Page</title>
-   <link rel="icon" type="ico" href="logos/favicon.ico">
+
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+  <title>Gent Bros</title>
+    <link rel="icon" type="logos/ico" href="logo_64.ico">
   <link rel="stylesheet" href="CSS/debug overlay.css"> 
   <link rel="stylesheet" href="CSS/colors.css">
   <link rel="stylesheet" href="CSS/debug overlay.css">  
@@ -145,7 +150,8 @@
 @keyframes spin { 100% { transform: rotate(360deg); } }
 </style>
 
-  
+
+
 
 
 <div id="successOverlay" class="hidden">
@@ -155,7 +161,18 @@
 </div>
 
 
-  
+
+
+
+<!-- <div id="successOverlay" class="hidden">
+  <div class="success-box">
+    <p>✅ Order Submitted Successfully!</p>
+    <button onclick="document.getElementById('successOverlay').classList.add('hidden'); window.location.href='thankyou.html';" 
+            class="ok-btn">OK</button>
+  </div>
+</div> -->
+
+
 
 <style>
 #successOverlay {
@@ -193,9 +210,11 @@
 </style>
 
 
+
+
    <!-- Debug Overlay -->
-   <!-- <div id="cartDebugPanel"></div>
-   -->
+   <!-- <button id="clearCartBtn">Clear Cart (Test)</button> -->
+   <!-- <div id="cartDebugPanel"></div> -->
 
    <script src="JS/cart-utils.js" defer></script>
    <script src="JS/cart.js" defer></script>
@@ -203,11 +222,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
