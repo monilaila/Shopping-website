@@ -318,32 +318,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetch(`${SCRIPT_URL}?${params.toString()}`)
       .then(res => res.text())
+
+
       .then(txt => {
-        if (loadingOverlay) loadingOverlay.classList.add("hidden");
-        if (successOverlay) successOverlay.classList.remove("hidden");
-
-
-    if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
-        CartUtils.updateCartCount(); // optional: updates cart counter visually
-    }
-
-        // Save checkout data (persist last successful submission)
-        if (typeof CartUtils !== "undefined" && CartUtils.saveCheckoutData) {
-          CartUtils.saveCheckoutData({
-            Name: fullName,
-            PhoneNumber: phoneNumber,
-            DistrictAndUpazila: { District: selectedDistrict, Upazila: selectedUpazila },
-            StreetAddress: streetAddress,
-            AdditionalNotes: additionalNotes,
-            CouponCode: couponCode
-          });
-        }
-
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.classList.remove("opacity-60", "cursor-not-allowed");
-        }
+          if (loadingOverlay) loadingOverlay.classList.add("hidden");
+          if (successOverlay) successOverlay.classList.remove("hidden");
+      
+          // Optional: keep cart data for thankyou page
+          if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
+              CartUtils.updateCartCount(); // updates cart counter visually
+          }
+      
+          if (typeof CartUtils !== "undefined" && CartUtils.saveCheckoutData) {
+              CartUtils.saveCheckoutData({
+                  Name: fullName,
+                  PhoneNumber: phoneNumber,
+                  DistrictAndUpazila: { District: selectedDistrict, Upazila: selectedUpazila },
+                  StreetAddress: streetAddress,
+                  AdditionalNotes: additionalNotes,
+                  CouponCode: couponCode
+              });
+          }
+      
+          if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.classList.remove("opacity-60", "cursor-not-allowed");
+          }
+      
+          // Auto-redirect to thankyou page
+          setTimeout(() => {
+              window.location.href = "thankyou.html"; // <-- redirect here
+          }, 500); // small delay so overlay briefly appears
       })
+
       .catch(err => {
         if (loadingOverlay) loadingOverlay.classList.add("hidden");
         alert("❌ Error sending order: " + (err && err.message ? err.message : err));
@@ -354,6 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-})();
+}) ();
+
 
 
