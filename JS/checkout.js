@@ -326,36 +326,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-      .then(txt => {
-          if (loadingOverlay) loadingOverlay.classList.add("hidden");
-          if (successOverlay) successOverlay.classList.remove("hidden");
-      
-          // Optional: keep cart data for thankyou page
-          if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
-              CartUtils.updateCartCount(); // updates cart counter visually
-          }
-      
-          if (typeof CartUtils !== "undefined" && CartUtils.saveCheckoutData) {
-              CartUtils.saveCheckoutData({
-                  Name: fullName,
-                  PhoneNumber: phoneNumber,
-                  DistrictAndUpazila: { District: selectedDistrict, Upazila: selectedUpazila },
-                  StreetAddress: streetAddress,
-                  AdditionalNotes: additionalNotes,
-                  CouponCode: couponCode
-              });
-          }
-      
-          if (submitBtn) {
-              submitBtn.disabled = false;
-              submitBtn.classList.remove("opacity-60", "cursor-not-allowed");
-          }
-      
-          // Auto-redirect to thankyou page
-          setTimeout(() => {
-              window.location.href = "thankyou.html"; // <-- redirect here
-          }, 500); // small delay so overlay briefly appears
-      })
+       .then(txt => {
+           if (loadingOverlay) loadingOverlay.classList.add("hidden");
+           if (successOverlay) successOverlay.classList.remove("hidden");
+       
+           // Optional: keep cart count updated visually
+           if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
+               CartUtils.updateCartCount();
+           }
+       
+           // Save checkout data temporarily for Thank You page ONLY
+           if (typeof CartUtils !== "undefined" && CartUtils.saveCheckoutData) {
+               CartUtils.saveCheckoutData({
+                   Name: fullName,
+                   PhoneNumber: phoneNumber,
+                   DistrictAndUpazila: { District: selectedDistrict, Upazila: selectedUpazila },
+                   StreetAddress: streetAddress,
+                   AdditionalNotes: additionalNotes,
+                   CouponCode: couponCode
+               });
+           }
+       
+           // Temporarily store cart in sessionStorage (for thankyou page)
+           sessionStorage.setItem("tempCart", JSON.stringify(cart));
+       
+           // Permanently clear localStorage cart
+           localStorage.removeItem("cart");
+       
+           // Auto-redirect to thankyou page
+           window.location.href = "thankyou.html"; 
+       })
+
+
+
+
+
 
       .catch(err => {
         if (loadingOverlay) loadingOverlay.classList.add("hidden");
