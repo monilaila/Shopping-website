@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // If cart is empty
     if (cart.length === 0) {
       container.innerHTML = '<p>Your cart is empty.</p>';
-      subtotalEl.textContent = '$0.00';
-      shippingEl.textContent = '$0.00';
+      subtotalEl.textContent = '৳0.00';
+      shippingEl.textContent = '৳0.00';
       totalEl.textContent = '0.00';
       CartUtils.updateCartCount();
       return;
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="text-sm text-gray-500">${item.color || ''} ${item.size || ''}</p>
 
             <div class="mt-4 flex items-center justify-between w-full">
-              <span class="text-gray-900 font-medium">$${item.price.toFixed(2)} each</span>
+              <span class="text-gray-900 font-medium">৳${item.price.toFixed(2)} each</span>
 
               <div class="flex items-center space-x-2">
 
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             </div>
 
-            <p class="text-sm text-gray-600 mt-2">Subtotal: $${subtotal.toFixed(2)}</p>
+            <p class="text-sm text-gray-600 mt-2">Subtotal: ৳${subtotal.toFixed(2)}</p>
           </div>
         </div>
       `;
@@ -152,8 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Update DOM with totals
-    subtotalEl.textContent = `$${total.toFixed(2)}`;
-    shippingEl.textContent = `$${deliveryFee.toFixed(2)}`;
+    subtotalEl.textContent = `৳${total.toFixed(2)}`;
+    shippingEl.textContent = `৳${deliveryFee.toFixed(2)}`;
     totalEl.textContent = (total + deliveryFee).toFixed(2);
 
     CartUtils.updateCartCount();
@@ -182,7 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
 
 
 
