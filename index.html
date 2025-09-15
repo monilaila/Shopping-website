@@ -3,11 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jubayer website</title>
-<!--   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
- -->
+  <title>Product Template with Stock Status</title>
+
   <link rel="stylesheet" href="CSS/colors.css"> 
 
   <link rel="stylesheet" href="CSS/debug overlay.css"> 
@@ -24,17 +21,17 @@
 
   <!-- Reuse your header from main page -->
   <div class="header-container">
-    <div class="shop-name" onclick="window.history.back()">Anime Shop</div>
+    <div class="shop-name" onclick="window.history.back()"><img src="logos/logo.svg"  alt="Logo"></div>
     
     <div class="search-container">
       <input type="text" id="searchInput" placeholder="Search products...">
       <button id="searchButton">Search</button>
     </div>
     
-<a href="cart.html" class="cart-icon">
-  <i class="fas fa-shopping-cart"></i>
-  <span class="cart-count">0</span>
-</a>
+    <a href="cart.html" class="cart-icon">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-count">0</span>
+    </a>
 
   </div>
 
@@ -88,7 +85,7 @@
   <div class="footer-container">
     <!-- About Section -->
     <div class="footer-section">
-      <h3>About Anime Shop</h3>
+      <h3>About GENT BROS</h3>
       <p>Your one-stop shop for all anime-related merchandise, collectibles, and fan gear. We bring your favorite characters to life!</p>
     </div>
     
@@ -117,29 +114,23 @@
   
   <!-- Copyright -->
   <div class="copyright">
-    <p>&copy; 2023 Anime Shop. All rights reserved.</p>
+    <p>&copy; 2023 GENT BROS. All rights reserved.</p>
   </div>
 </footer>
-
-
-
 
   <script src="JS/filter.js"></script>
   <script src="JS/cover photo.js"></script>
   <script src="JS/Search ber.js"></script>
   <script src="JS/product card.js"></script>
-
+  <script src="JS/cart-utils.js" defer></script>
 
 
    <!-- Debug Overlay -->
    <!-- <button id="clearCartBtn">Clear Cart (Test)</button>
-   <div id="cartDebugPanel"></div> -->
+   <div id="cartDebugPanel"></div>
+ -->
 
 
-   <script src="JS/cart-utils.js" defer></script>
 </body>
 </html>
-
-
-
 
