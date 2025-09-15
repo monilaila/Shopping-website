@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="CSS/colors.css">
+  <!-- html2canvas for PNG download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    /* Ensure receiptContainer includes top bar visually for PNG */
+    #receiptContainerWrapper {
+      position: relative;
+      width: 100%;
+      max-width: 768px;
+    }
+    #topBarClone {
+      width: 100%;
+      background: var(--primary-color);
+      color: var(--text-light);
+      padding: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      border-radius: 1rem 1rem 0 0;
+    }
+    /* Optional: prevent actual fixed bar from overlapping */
+    body > #topBarActual {
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-start pt-24 p-4">
+
+  <!-- Actual Top Bar (fixed) -->
+  <div id="topBarActual" onclick="window.location.href='home.html'" 
+       class="w-full fixed top-0 left-0 bg-[var(--primary-color)] text-[var(--text-light)] shadow-md cursor-pointer">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center">
+      <span class="text-lg font-semibold"><img src="logos/logo_w.svg" alt="Logo"></span>
+    </div>
+  </div>
+
+  <!-- Receipt + cloned top bar for PNG -->
+  <div id="receiptContainerWrapper">
+    <!-- Cloned Top Bar for PNG -->
+   <div id="topBarClone" class="flex items-center justify-center space-x-2">
+     <img src="logos/logo_w.svg" alt="Logo" style="height:24px; cursor:pointer;" onclick="window.location.href='home.html'">
+     <span class="text-white font-semibold text-lg">Anime Shop</span>
+   </div>
+
+
+    <div id="receiptContainer" class="bg-white shadow-xl rounded-2xl w-full p-8">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Thank You for Your Order!</h2>
+
+      <div id="receipt" class="space-y-4">
+        <!-- Products will be injected here -->
+      </div>
+
+      <div id="totalCharge" class="mt-6 text-right text-lg font-semibold text-gray-800">
+        <!-- Total delivery + order will appear here -->
+      </div>
+
+      <div class="mt-8 flex justify-center space-x-4">
+        <button id="homeBtn" 
+                class="bg-[var(--primary-color)] text-white py-2 px-6 rounded-lg hover:bg-[var(--primary-hover-color)] transition">
+          Back to Home
+        </button>
+
+        <button id="downloadBtn" 
+                class="bg-green-600 text-white py-2 px-6 rounded-lg hover:bg-green-700 transition">
+          Download as PNG
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const deliveryCharge = 50; // example delivery fee
+    let totalAmount = 0;
+    const receiptDiv = document.getElementById("receipt");
+
+    if (cart.length === 0) {
+      receiptDiv.innerHTML = `<p class="text-gray-500 text-center">No products found in your order.</p>`;
+    } else {
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        totalAmount += itemTotal;
+
+        const productDiv = document.createElement("div");
+        productDiv.className = "flex justify-between border-b pb-2 items-center";
+
+        productDiv.innerHTML = `
+          <div class="flex items-center space-x-4">
+            <img src="image/${item.image || 'placeholder.png'}" alt="${item.title}" class="w-16 h-16 object-cover rounded-md border">
+            <div>
+              <p class="font-semibold">${index + 1}. ${item.title}</p>
+              ${item.color ? `<p class="text-gray-500 text-sm">Color: ${item.color}</p>` : ""}
+              ${item.size ? `<p class="text-gray-500 text-sm">Size: ${item.size}</p>` : ""}
+              <p class="text-gray-500 text-sm">Qty: ${item.quantity}</p>
+            </div>
+          </div>
+          <div class="font-semibold">৳${itemTotal.toFixed(2)}</div>
+        `;
+
+        receiptDiv.appendChild(productDiv);
+      });
+
+      const totalDiv = document.getElementById("totalCharge");
+      totalDiv.innerHTML = `
+        <p>Delivery Charge: ৳${deliveryCharge.toFixed(2)}</p>
+        <p class="text-xl font-bold mt-2">Grand Total: ৳${(totalAmount + deliveryCharge).toFixed(2)}</p>
+      `;
+    }
+
+    // Function to clear all product-related data
+    function clearCartData() {
+      localStorage.removeItem("cart");          // remove cart
+      if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
+        CartUtils.updateCartCount();           // update cart counter
+      }
+    }
+
+    // Download receipt as PNG AND clear cart
+    document.getElementById("downloadBtn").addEventListener("click", () => {
+      html2canvas(document.getElementById("receiptContainerWrapper")).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "receipt.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+
+        clearCartData();
+      });
+    });
+
+    // Back/Home button clears cart and redirects
+    document.getElementById("homeBtn").addEventListener("click", () => {
+      clearCartData();
+      window.location.href = "home.html";
+    });
+
+    // Optional: clear cart if user refreshes page or closes tab
+    window.addEventListener("beforeunload", () => {
+      clearCartData();
+    });
+  </script>
+</body>
+</html>
