@@ -108,7 +108,7 @@
           return `• ${item.title}  
             <br>&nbsp;&nbsp;ID: ${item.id}  
             <br>&nbsp;&nbsp;Image: ${imageFile}  
-            <br>&nbsp;&nbsp;(${color}, ${size}) x${item.quantity} = $${(item.quantity * item.price).toFixed(2)}<br>`;
+            <br>&nbsp;&nbsp;(${color}, ${size}) x${item.quantity} = ৳${(item.quantity * item.price).toFixed(2)}<br>`;
         }).join('<br>');
     }
   
