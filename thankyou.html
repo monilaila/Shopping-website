@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gent Bros</title>
-   <link rel="icon" type="ico" href="logos/favicon.ico">
+
+
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="CSS/colors.css">
   <!-- html2canvas for PNG download -->
@@ -48,7 +50,7 @@
   <div id="receiptContainerWrapper">
     <!-- Cloned Top Bar for PNG -->
    <div id="topBarClone" class="flex items-center justify-center space-x-2">
-     <img src="logos/logo_w.svg" alt="Logo" style="height:24px; cursor:pointer;" onclick="window.location.href='home.html'">
+     <img src="logos/logo_w.svg" alt="Logo" style="height:24px; cursor:pointer; " onclick="window.location.href='index.html'">
      <span class="text-white font-semibold text-lg">Gent Bros</span>
    </div>
 
@@ -78,75 +80,84 @@
     </div>
   </div>
 
-  <script>
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const deliveryCharge = 50; // example delivery fee
-    let totalAmount = 0;
-    const receiptDiv = document.getElementById("receipt");
+<script>
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const deliveryCharge = 50; // example delivery fee
+  let totalAmount = 0;
+  const receiptDiv = document.getElementById("receipt");
 
-    if (cart.length === 0) {
-      receiptDiv.innerHTML = `<p class="text-gray-500 text-center">No products found in your order.</p>`;
-    } else {
-      cart.forEach((item, index) => {
-        const itemTotal = item.price * item.quantity;
-        totalAmount += itemTotal;
+  if (cart.length === 0) {
+    receiptDiv.innerHTML = `<p class="text-gray-500 text-center">No products found in your order.</p>`;
+  } else {
+    cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity;
+      totalAmount += itemTotal;
 
-        const productDiv = document.createElement("div");
-        productDiv.className = "flex justify-between border-b pb-2 items-center";
+      const productDiv = document.createElement("div");
+      productDiv.className = "flex justify-between border-b pb-2 items-center";
 
-        productDiv.innerHTML = `
-          <div class="flex items-center space-x-4">
-            <img src="image/${item.image || 'placeholder.png'}" alt="${item.title}" class="w-16 h-16 object-cover rounded-md border">
-            <div>
-              <p class="font-semibold">${index + 1}. ${item.title}</p>
-              ${item.color ? `<p class="text-gray-500 text-sm">Color: ${item.color}</p>` : ""}
-              ${item.size ? `<p class="text-gray-500 text-sm">Size: ${item.size}</p>` : ""}
-              <p class="text-gray-500 text-sm">Qty: ${item.quantity}</p>
-            </div>
+      productDiv.innerHTML = `
+        <div class="flex items-center space-x-4">
+          <img src="image/${item.image || 'placeholder.png'}" alt="${item.title}" class="w-16 h-16 object-cover rounded-md border">
+          <div>
+            <p class="font-semibold">${index + 1}. ${item.title}</p>
+            ${item.color ? `<p class="text-gray-500 text-sm">Color: ${item.color}</p>` : ""}
+            ${item.size ? `<p class="text-gray-500 text-sm">Size: ${item.size}</p>` : ""}
+            <p class="text-gray-500 text-sm">Qty: ${item.quantity}</p>
           </div>
-          <div class="font-semibold">৳${itemTotal.toFixed(2)}</div>
-        `;
-
-        receiptDiv.appendChild(productDiv);
-      });
-
-      const totalDiv = document.getElementById("totalCharge");
-      totalDiv.innerHTML = `
-        <p>Delivery Charge: ৳${deliveryCharge.toFixed(2)}</p>
-        <p class="text-xl font-bold mt-2">Grand Total: ৳${(totalAmount + deliveryCharge).toFixed(2)}</p>
+        </div>
+        <div class="font-semibold">৳${itemTotal.toFixed(2)}</div>
       `;
-    }
 
-    // Function to clear all product-related data
-    function clearCartData() {
-      localStorage.removeItem("cart");          // remove cart
-      if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
-        CartUtils.updateCartCount();           // update cart counter
-      }
-    }
-
-    // Download receipt as PNG AND clear cart
-    document.getElementById("downloadBtn").addEventListener("click", () => {
-      html2canvas(document.getElementById("receiptContainerWrapper")).then(canvas => {
-        const link = document.createElement("a");
-        link.download = "receipt.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-
-        clearCartData();
-      });
+      receiptDiv.appendChild(productDiv);
     });
 
-    // Back/Home button clears cart and redirects
-    document.getElementById("homeBtn").addEventListener("click", () => {
-      clearCartData();
-      window.location.href = "index.html";
-    });
+    const totalDiv = document.getElementById("totalCharge");
+    totalDiv.innerHTML = `
+      <p>Delivery Charge: ৳${deliveryCharge.toFixed(2)}</p>
+      <p class="text-xl font-bold mt-2">Grand Total: ৳${(totalAmount + deliveryCharge).toFixed(2)}</p>
+    `;
+  }
 
-    // Optional: clear cart if user refreshes page or closes tab
-    window.addEventListener("beforeunload", () => {
+  // Function to clear all product-related data
+  function clearCartData() {
+    localStorage.removeItem("cart");
+    if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
+      CartUtils.updateCartCount();
+    }
+  }
+
+  // Download receipt as PNG AND clear cart
+  document.getElementById("downloadBtn").addEventListener("click", () => {
+    html2canvas(document.getElementById("receiptContainerWrapper")).then(canvas => {
+      const link = document.createElement("a");
+      link.download = "receipt.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+
       clearCartData();
     });
-  </script>
+  });
+
+  // Back/Home button clears cart and redirects
+  document.getElementById("homeBtn").addEventListener("click", () => {
+    clearCartData();
+    window.location.href = "index.html";
+  });
+
+  // Clear cart if user navigates back with browser button
+  window.addEventListener("popstate", () => {
+    clearCartData();
+    window.location.href = "index.html";
+  });
+
+  // Optional: clear cart if user closes tab or refreshes
+  window.addEventListener("beforeunload", () => {
+    clearCartData();
+  });
+</script>
+
+
+
 </body>
 </html>
