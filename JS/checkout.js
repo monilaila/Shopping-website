@@ -322,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (loadingOverlay) loadingOverlay.classList.add("hidden");
         if (successOverlay) successOverlay.classList.remove("hidden");
 
-  
+
     if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
         CartUtils.updateCartCount(); // optional: updates cart counter visually
     }
@@ -355,4 +355,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 })();
+
 
