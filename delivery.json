@@ -1,7 +1,0 @@
-{
-  "baseFee": 15,
-  "options": {
-    "inside": { "extra": 0, "waitDays": 2 },
-    "outside": { "extra": 5, "waitDays": 5 }
-  }
-}
