@@ -141,6 +141,33 @@
   });
 </script>
 
+<script>
+  // Clear temporary data (session storage)
+  sessionStorage.removeItem("tempCart");
+
+  // Always redirect if the page is loaded without tempCart
+  if (!sessionStorage.getItem("tempCart")) {
+      // user came here by back button or refresh
+      window.location.replace("index.html");
+  }
+
+  // Push fake history state
+  history.pushState(null, null, location.href);
+  history.pushState(null, null, location.href);
+
+  // On back button (popstate), always redirect to homepage
+  window.addEventListener("popstate", function (event) {
+      window.location.replace("index.html");
+  });
+
+  // Handle page restore (bfcache in mobile Safari/Chrome)
+  window.addEventListener("pageshow", function (event) {
+      if (event.persisted) {
+          window.location.replace("index.html");
+      }
+  });
+</script>
+
 
    <!-- Debug Overlay -->
    <!-- <button id="clearCartBtn">Clear Cart (Test)</button>
@@ -148,6 +175,7 @@
 
 </body>
 </html>
+
 
 
 
