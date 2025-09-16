@@ -1,4 +1,9 @@
 
+
+
+
+
+
 (function () {
   // --- CONFIG ---
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyokOceeMG8d9qoenAOc75lsctFYZss_003XxO-iToUI_Atry16yKU_u-xA2USIXsiUNQ/exec";
@@ -326,52 +331,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-       .then(txt => {
-           if (loadingOverlay) loadingOverlay.classList.add("hidden");
-           if (successOverlay) successOverlay.classList.remove("hidden");
-       
-           // Optional: keep cart count updated visually
-           if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
-               CartUtils.updateCartCount();
-           }
-       
-           // Save checkout data temporarily for Thank You page ONLY
-           if (typeof CartUtils !== "undefined" && CartUtils.saveCheckoutData) {
-               CartUtils.saveCheckoutData({
-                   Name: fullName,
-                   PhoneNumber: phoneNumber,
-                   DistrictAndUpazila: { District: selectedDistrict, Upazila: selectedUpazila },
-                   StreetAddress: streetAddress,
-                   AdditionalNotes: additionalNotes,
-                   CouponCode: couponCode
-               });
-           }
-       
-           // Temporarily store cart in sessionStorage (for thankyou page)
-           sessionStorage.setItem("tempCart", JSON.stringify(cart));
-       
-           // Permanently clear localStorage cart
-           localStorage.removeItem("cart");
-       
-           // Auto-redirect to thankyou page
-           window.location.href = "thankyou.html"; 
-       })
+.then(txt => {
+    // Hide loading, show success overlay
+    if (loadingOverlay) loadingOverlay.classList.add("hidden");
+    if (successOverlay) successOverlay.classList.remove("hidden");
+
+    // Optional: update cart count visually
+    if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
+        CartUtils.updateCartCount();
+    }
+
+    // Build temporary checkout data object for thankyou page
+    const tempCheckout = {
+        Name: fullName,
+        PhoneNumber: phoneNumber,
+        DistrictAndUpazila: { District: selectedDistrict, Upazila: selectedUpazila },
+        StreetAddress: streetAddress,
+        AdditionalNotes: additionalNotes,
+        CouponCode: couponCode,
+        cart: cart, // include products
+        deliveryChoice: delivery
+    };
+
+    // Store temporarily in sessionStorage
+    sessionStorage.setItem("tempCheckout", JSON.stringify(tempCheckout));
+
+    // Permanently clear localStorage cart
+    localStorage.removeItem("cart");
+
+    // Auto-redirect to thankyou page
+    window.location.href = "thankyou.html"; 
+})
+.catch(err => {
+    if (loadingOverlay) loadingOverlay.classList.add("hidden");
+    alert("❌ Error sending order: " + (err && err.message ? err.message : err));
+
+    // Re-enable submit button
+    if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove("opacity-60", "cursor-not-allowed");
+    }
+});
 
 
-
-
-
-
-      .catch(err => {
-        if (loadingOverlay) loadingOverlay.classList.add("hidden");
-        alert("❌ Error sending order: " + (err && err.message ? err.message : err));
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.classList.remove("opacity-60", "cursor-not-allowed");
-        }
-      });
   });
 
 }) ();
+
 
 
