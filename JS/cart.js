@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const subtotalEl = document.getElementById('subtotal');
   const shippingEl = document.getElementById('shipping');
   const outsideCheckbox = document.getElementById('outsideDelivery');
+  const outsideLabel = document.getElementById('outsideLabel');
+  const insideLabel = document.getElementById('insideLabel');
 
   /**
    * Load delivery configuration from delivery.json
@@ -139,6 +141,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const deliveryData = await loadDeliveryData();
     const deliveryChoice = CartUtils.getDeliveryChoice() || "inside";
 
+    // Update delivery labels dynamically
+    if (outsideLabel && deliveryData.options.outside) {
+      outsideLabel.textContent = `Outside City (+৳${deliveryData.options.outside.extra})`;
+    }
+    if (insideLabel) {
+      insideLabel.textContent = `Standard shipping inside city: ৳${deliveryData.baseFee}`;
+    }
+
     let deliveryFee = deliveryData.baseFee;
     if (deliveryData.options[deliveryChoice]) {
       deliveryFee += deliveryData.options[deliveryChoice].extra;
@@ -182,12 +192,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
-
-
-
-
-
-
 
 
