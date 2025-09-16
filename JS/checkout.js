@@ -120,6 +120,29 @@
   // initialize district list
   populateDistricts();
 
+  // --- Auto-save checkout info to localStorage ---
+  function saveCheckoutData() {
+    const checkoutData = {
+      Name: fullNameInput.value.trim(),
+      PhoneNumber: phoneNumberInput.value.trim(),
+      StreetAddress: streetAddressInput.value.trim(),
+      DistrictAndUpazila: {
+        District: selectedDistrict,
+        Upazila: selectedUpazila
+      }
+    };
+    localStorage.setItem("checkoutData", JSON.stringify(checkoutData));
+  }
+
+  // Save on typing
+  [fullNameInput, phoneNumberInput, streetAddressInput].forEach(input => {
+    input.addEventListener("input", saveCheckoutData);
+  });
+
+  // Save when selecting district/upazila
+  districtList.addEventListener("click", saveCheckoutData);
+  upazilaList.addEventListener("click", saveCheckoutData);
+
   // --- Event Delegation: district selection ---
   districtList.addEventListener("click", (e) => {
     const li = e.target.closest("li");
@@ -128,7 +151,6 @@
     districtText.textContent = selectedDistrict;
     districtMenu.classList.add("hidden");
 
-    // enable upazila button and populate upazila list
     upazilaBtn.disabled = false;
     upazilaBtn.classList.remove("bg-gray-100", "text-gray-500");
     upazilaBtn.classList.add("bg-gray-50", "hover:bg-gray-100", "text-gray-700");
@@ -150,7 +172,6 @@
   districtBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     districtMenu.classList.toggle("hidden");
-    // ensure other menu closed
     upazilaMenu.classList.add("hidden");
   });
 
@@ -173,44 +194,45 @@
   });
 
   // --- Restore saved data on load ---
-document.addEventListener("DOMContentLoaded", () => {
-    // --- 1. Check if cart has products ---
-    const cart = (typeof CartUtils !== "undefined" && CartUtils.getCart) ? CartUtils.getCart() : [];
-    if (!cart || cart.length === 0) {
-        alert("Your cart is empty! Redirecting to homepage...");
-        window.location.href = "index.html"; // replace with your homepage URL
-        return; // stop further execution
-    }
-
-    // --- 2. Restore saved checkout data if available ---
-    const saved = (typeof CartUtils !== "undefined" && CartUtils.getCheckoutData) ? CartUtils.getCheckoutData() : null;
-    if (!saved) return;
-
-    fullNameInput.value = saved.Name || "";
-    phoneNumberInput.value = saved.PhoneNumber || "";
-    streetAddressInput.value = saved.StreetAddress || "";
-
-    // optional fields
-    if (saved.AdditionalNotes) additionalNotesInput.value = saved.AdditionalNotes;
-    if (saved.CouponCode) couponCodeInput.value = saved.CouponCode;
-
-    // Restore district & upazila
-    if (saved.DistrictAndUpazila) {
-        selectedDistrict = saved.DistrictAndUpazila.District || "";
-        selectedUpazila = saved.DistrictAndUpazila.Upazila || "";
-        if (selectedDistrict) {
+  document.addEventListener("DOMContentLoaded", () => {
+    // Restore checkout info from localStorage
+    const lsSaved = localStorage.getItem("checkoutData");
+    if (lsSaved) {
+      try {
+        const parsed = JSON.parse(lsSaved);
+        fullNameInput.value = parsed.Name || "";
+        phoneNumberInput.value = parsed.PhoneNumber || "";
+        streetAddressInput.value = parsed.StreetAddress || "";
+        if (parsed.DistrictAndUpazila) {
+          selectedDistrict = parsed.DistrictAndUpazila.District || "";
+          selectedUpazila = parsed.DistrictAndUpazila.Upazila || "";
+          if (selectedDistrict) {
             districtText.textContent = selectedDistrict;
             upazilaBtn.disabled = false;
             upazilaBtn.classList.remove("bg-gray-100", "text-gray-500");
             upazilaBtn.classList.add("bg-gray-50", "hover:bg-gray-100", "text-gray-700");
             populateUpazilas(selectedDistrict);
-            if (selectedUpazila) {
-                upazilaText.textContent = selectedUpazila;
-            }
+            if (selectedUpazila) upazilaText.textContent = selectedUpazila;
+          }
         }
+      } catch (e) { console.error("Failed to parse saved checkoutData", e); }
     }
-});
 
+    // Check if cart has products
+    const cart = (typeof CartUtils !== "undefined" && CartUtils.getCart) ? CartUtils.getCart() : [];
+    if (!cart || cart.length === 0) {
+      alert("Your cart is empty! Redirecting to homepage...");
+      window.location.href = "index.html";
+      return;
+    }
+
+    // Restore optional checkout data via CartUtils
+    const saved = (typeof CartUtils !== "undefined" && CartUtils.getCheckoutData) ? CartUtils.getCheckoutData() : null;
+    if (!saved) return;
+
+    if (saved.AdditionalNotes) additionalNotesInput.value = saved.AdditionalNotes;
+    if (saved.CouponCode) couponCodeInput.value = saved.CouponCode;
+  });
 
   // --- Validation helpers ---
   const requiredElements = [fullNameInput, phoneNumberInput, districtBtn, upazilaBtn, streetAddressInput];
@@ -239,11 +261,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (errors.length) {
       errors.forEach(markInvalid);
-      // Focus the first invalid element and scroll into view
       const first = errors[0];
-      try {
-        first.focus();
-      } catch (err) { /* ignore focus errors */ }
+      try { first.focus(); } catch (err) {}
       first.scrollIntoView({ behavior: "smooth", block: "center" });
       return false;
     }
@@ -253,13 +272,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Submit handler ---
   checkoutForm.addEventListener("submit", function (e) {
     e.preventDefault();
+    if (!validateForm()) return;
 
-    // run validation — if invalid, stop and do NOT send
-    if (!validateForm()) {
-      return;
-    }
-
-    // Build payload (same structure as your existing code)
     const cart = (typeof CartUtils !== "undefined" && CartUtils.getCart) ? CartUtils.getCart() : [];
     const delivery = (typeof CartUtils !== "undefined" && CartUtils.getDeliveryChoice) ? CartUtils.getDeliveryChoice() : "unknown";
 
@@ -306,78 +320,56 @@ document.addEventListener("DOMContentLoaded", () => {
       optionInformation
     });
 
-    // disable submit button to prevent duplicate clicks
     const submitBtn = checkoutForm.querySelector('button[type="submit"]');
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.classList.add("opacity-60", "cursor-not-allowed");
     }
 
-    // show loading overlay and send
     if (loadingOverlay) loadingOverlay.classList.remove("hidden");
 
-
-    
     fetch(`${SCRIPT_URL}?${params.toString()}`)
       .then(res => res.text())
+      .then(txt => {
+        if (loadingOverlay) loadingOverlay.classList.add("hidden");
+        if (successOverlay) successOverlay.classList.remove("hidden");
 
+        if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
+          CartUtils.updateCartCount();
+        }
 
+        // Only clear cart, keep checkout info in localStorage
+        localStorage.removeItem("cart");
 
+        const tempCheckout = {
+          Name: fullName,
+          PhoneNumber: phoneNumber,
+          DistrictAndUpazila: { District: selectedDistrict, Upazila: selectedUpazila },
+          StreetAddress: streetAddress,
+          AdditionalNotes: additionalNotes,
+          CouponCode: couponCode,
+          cart: cart,
+          deliveryChoice: delivery
+        };
+        sessionStorage.setItem("tempCheckout", JSON.stringify(tempCheckout));
 
+        window.location.href = "thankyou.html";
 
-
-.then(txt => {
-    // Hide loading, show success overlay
-    if (loadingOverlay) loadingOverlay.classList.add("hidden");
-    if (successOverlay) successOverlay.classList.remove("hidden");
-
-    // Optional: update cart count visually
-    if (typeof CartUtils !== "undefined" && CartUtils.updateCartCount) {
-        CartUtils.updateCartCount();
-    }
-
-    // Build temporary checkout data object for thankyou page
-    const tempCheckout = {
-        Name: fullName,
-        PhoneNumber: phoneNumber,
-        DistrictAndUpazila: { District: selectedDistrict, Upazila: selectedUpazila },
-        StreetAddress: streetAddress,
-        AdditionalNotes: additionalNotes,
-        CouponCode: couponCode,
-        cart: cart, // include products
-        deliveryChoice: delivery
-    };
-
-    // Store temporarily in sessionStorage
-    sessionStorage.setItem("tempCheckout", JSON.stringify(tempCheckout));
-
-    // Permanently clear localStorage cart
-    localStorage.removeItem("cart");
-
-    // Auto-redirect to thankyou page
-    window.location.href = "thankyou.html"; 
-
-    // --- Backup: force redirect home after 1 second ---
-    setTimeout(() => {
-        window.location.replace("index.html");
-    }, 1000);
-})
-
-.catch(err => {
-    if (loadingOverlay) loadingOverlay.classList.add("hidden");
-    alert("❌ Error sending order: " + (err && err.message ? err.message : err));
-
-    // Re-enable submit button
-    if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.classList.remove("opacity-60", "cursor-not-allowed");
-    }
-});
-
-
+        setTimeout(() => {
+          window.location.replace("index.html");
+        }, 1000);
+      })
+      .catch(err => {
+        if (loadingOverlay) loadingOverlay.classList.add("hidden");
+        alert("❌ Error sending order: " + (err && err.message ? err.message : err));
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove("opacity-60", "cursor-not-allowed");
+        }
+      });
   });
 
-}) ();
+})();
 
 
 
