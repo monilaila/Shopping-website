@@ -1,9 +1,4 @@
 
-
-
-
-
-
 (function () {
   // --- CONFIG ---
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyokOceeMG8d9qoenAOc75lsctFYZss_003XxO-iToUI_Atry16yKU_u-xA2USIXsiUNQ/exec";
@@ -383,7 +378,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 }) ();
-
 
 
 
