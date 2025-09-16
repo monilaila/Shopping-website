@@ -73,83 +73,79 @@
   </div>
 
 <script>
-function initThankYouPage() {
-    // Always start fresh
-    const tempCart = JSON.parse(sessionStorage.getItem("tempCart") || "[]");
-    sessionStorage.removeItem("tempCart"); // erase immediately
+  // --- Step 1: Read temporary checkout data ---
+  const tempCheckout = JSON.parse(sessionStorage.getItem("tempCheckout") || "[]");
 
-    // If no products → redirect home
-    if (!tempCart.length) {
-        window.location.replace("index.html");
-        return;
-    }
+  // If no cart or empty, redirect home
+  if (!tempCheckout || !tempCheckout.cart || tempCheckout.cart.length === 0) {
+      window.location.replace("index.html");
+  }
 
-    // Render receipt
-    const receiptDiv = document.getElementById("receipt");
-    const deliveryCharge = 50;
-    let totalAmount = 0;
+  const receiptDiv = document.getElementById("receipt");
+  const deliveryCharge = 50;
+  let totalAmount = 0;
 
-    tempCart.forEach((item, index) => {
-        const itemTotal = item.price * item.quantity;
-        totalAmount += itemTotal;
+  // --- Step 2: Render receipt ---
+  tempCheckout.cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity;
+      totalAmount += itemTotal;
 
-        const div = document.createElement("div");
-        div.className = "flex justify-between border-b pb-2 items-center";
-        div.innerHTML = `
-            <div class="flex items-center space-x-4">
-              <img src="image/${item.image || 'placeholder.png'}" class="w-16 h-16 object-cover rounded-md border">
-              <div>
-                <p class="font-semibold">${index+1}. ${item.title}</p>
-                ${item.color ? `<p class="text-gray-500 text-sm">Color: ${item.color}</p>` : ""}
-                ${item.size ? `<p class="text-gray-500 text-sm">Size: ${item.size}</p>` : ""}
-                <p class="text-gray-500 text-sm">Qty: ${item.quantity}</p>
-              </div>
-            </div>
-            <div class="font-semibold">৳${itemTotal.toFixed(2)}</div>
-        `;
-        receiptDiv.appendChild(div);
-    });
+      const div = document.createElement("div");
+      div.className = "flex justify-between border-b pb-2 items-center";
+      div.innerHTML = `
+        <div class="flex items-center space-x-4">
+          <img src="image/${item.image || 'placeholder.png'}" class="w-16 h-16 object-cover rounded-md border">
+          <div>
+            <p class="font-semibold">${index+1}. ${item.title}</p>
+            ${item.color ? `<p class="text-gray-500 text-sm">Color: ${item.color}</p>` : ""}
+            ${item.size ? `<p class="text-gray-500 text-sm">Size: ${item.size}</p>` : ""}
+            <p class="text-gray-500 text-sm">Qty: ${item.quantity}</p>
+          </div>
+        </div>
+        <div class="font-semibold">৳${itemTotal.toFixed(2)}</div>
+      `;
+      receiptDiv.appendChild(div);
+  });
 
-    document.getElementById("totalCharge").innerHTML = `
-        <p>Delivery Charge: ৳${deliveryCharge.toFixed(2)}</p>
-        <p class="text-xl font-bold mt-2">Grand Total: ৳${(totalAmount + deliveryCharge).toFixed(2)}</p>
-    `;
+  document.getElementById("totalCharge").innerHTML = `
+    <p>Delivery Charge: ৳${deliveryCharge.toFixed(2)}</p>
+    <p class="text-xl font-bold mt-2">Grand Total: ৳${(totalAmount + deliveryCharge).toFixed(2)}</p>
+  `;
 
-    // --- Event Listeners ---
-    document.getElementById("downloadBtn").addEventListener("click", () => {
-        html2canvas(document.getElementById("receiptContainerWrapper")).then(canvas => {
-            const link = document.createElement("a");
-            link.download = "receipt.png";
-            link.href = canvas.toDataURL("image/png");
-            link.click();
-            window.location.replace("index.html");
-        });
-    });
+  // --- Step 3: Remove tempCheckout from sessionStorage immediately after rendering ---
+  sessionStorage.removeItem("tempCheckout");
 
-    document.getElementById("homeBtn").addEventListener("click", () => {
-        window.location.replace("index.html");
-    });
+  // --- Step 4: Download receipt as PNG and redirect home ---
+  document.getElementById("downloadBtn").addEventListener("click", () => {
+      html2canvas(document.getElementById("receiptContainerWrapper")).then(canvas => {
+          const link = document.createElement("a");
+          link.download = "receipt.png";
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+          window.location.replace("index.html");
+      });
+  });
 
-    // Force back button → homepage
-    history.pushState(null, null, location.href);
-    history.pushState(null, null, location.href);
+  // --- Step 5: Home button always redirects ---
+  document.getElementById("homeBtn").addEventListener("click", () => {
+      window.location.replace("index.html");
+  });
 
-    window.addEventListener("popstate", () => {
-        window.location.replace("index.html");
-    });
+  // --- Step 6: Force back button to go home ---
+  history.pushState(null, null, location.href);
+  history.pushState(null, null, location.href);
 
-    // Handle page restore (bfcache)
-    window.addEventListener("pageshow", (event) => {
-        if (event.persisted) {
-            window.location.replace("index.html");
-        }
-    });
-}
+  window.addEventListener("popstate", () => {
+      window.location.replace("index.html");
+  });
 
-// Run on load
-document.addEventListener("DOMContentLoaded", initThankYouPage);
+  // --- Step 7: Handle page restore (bfcache) ---
+  window.addEventListener("pageshow", (event) => {
+      if (event.persisted) {
+          window.location.replace("index.html");
+      }
+  });
 </script>
-
 
 
    <!-- Debug Overlay -->
@@ -158,6 +154,7 @@ document.addEventListener("DOMContentLoaded", initThankYouPage);
 
 </body>
 </html>
+
 
 
 
