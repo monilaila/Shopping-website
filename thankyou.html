@@ -73,12 +73,9 @@
   </div>
 
 <script>
-  // Read tempCart ONCE
-  const tempCartRaw = sessionStorage.getItem("tempCart");
-  let tempCart = [];
-  if (tempCartRaw) {
-      tempCart = JSON.parse(tempCartRaw);
-  }
+  // Read tempCart ONLY once
+  const tempCart = JSON.parse(sessionStorage.getItem("tempCart") || "[]");
+  sessionStorage.removeItem("tempCart"); // erase immediately
 
   if (!tempCart.length) {
       // No products → go home
@@ -115,32 +112,28 @@
     <p class="text-xl font-bold mt-2">Grand Total: ৳${(totalAmount+deliveryCharge).toFixed(2)}</p>
   `;
 
-  // Clear data after rendering (so refreshing/back won’t keep it)
-  sessionStorage.removeItem("tempCart");
-
-  // Download PNG → then redirect home
+  // Download PNG
   document.getElementById("downloadBtn").addEventListener("click", () => {
       html2canvas(document.getElementById("receiptContainerWrapper")).then(canvas => {
           const link = document.createElement("a");
           link.download = "receipt.png";
           link.href = canvas.toDataURL("image/png");
           link.click();
-          window.location.replace("index.html");
       });
   });
 
   // Back/Home button
   document.getElementById("homeBtn").addEventListener("click", () => {
-      window.location.replace("index.html");
+      window.location.href = "index.html";
   });
 
-  // --- BACK button handling ---
+  // Force back button to go home
   history.pushState(null, null, location.href);
   window.addEventListener("popstate", () => {
       window.location.replace("index.html");
   });
 
-  // Handle bfcache restore (mobile Safari/Chrome)
+  // Handle bfcache restore
   window.addEventListener("pageshow", (event) => {
       if (event.persisted) {
           window.location.replace("index.html");
@@ -148,28 +141,27 @@
   });
 </script>
 
-
-
 <script>
-  // Read tempCart ONCE
+  // Clear temporary data (session storage)
+  sessionStorage.removeItem("tempCart");
 
-
-  if (!tempCart.length) {
-      // No products → go home
+  // Always redirect if the page is loaded without tempCart
+  if (!sessionStorage.getItem("tempCart")) {
+      // user came here by back button or refresh
       window.location.replace("index.html");
   }
 
-  // Immediately clear after reading (so user can’t come back with same data)
-  sessionStorage.removeItem("tempCart");
-
-  // Force back button → always go home
+  // Push fake history state
   history.pushState(null, null, location.href);
-  window.addEventListener("popstate", () => {
+  history.pushState(null, null, location.href);
+
+  // On back button (popstate), always redirect to homepage
+  window.addEventListener("popstate", function (event) {
       window.location.replace("index.html");
   });
 
-  // Handle mobile browsers bfcache restore
-  window.addEventListener("pageshow", (event) => {
+  // Handle page restore (bfcache in mobile Safari/Chrome)
+  window.addEventListener("pageshow", function (event) {
       if (event.persisted) {
           window.location.replace("index.html");
       }
@@ -184,6 +176,7 @@
 
 </body>
 </html>
+
 
 
 
