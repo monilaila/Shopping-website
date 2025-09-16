@@ -72,6 +72,7 @@
     </div>
   </div>
 
+
 <script>
   // --- Step 1: Read temporary checkout data ---
   const tempCheckout = JSON.parse(sessionStorage.getItem("tempCheckout") || "[]");
@@ -115,14 +116,20 @@
   // --- Step 3: Remove tempCheckout from sessionStorage immediately after rendering ---
   sessionStorage.removeItem("tempCheckout");
 
-  // --- Step 4: Download receipt as PNG and redirect home ---
+  // --- Step 4: Download receipt as PNG (always triggers download) ---
   document.getElementById("downloadBtn").addEventListener("click", () => {
       html2canvas(document.getElementById("receiptContainerWrapper")).then(canvas => {
+          // Always generate a new timestamp in filename to avoid overwrite conflicts
+          const timestamp = Date.now();
           const link = document.createElement("a");
-          link.download = "receipt.png";
+          link.download = `receipt_${timestamp}.png`;
           link.href = canvas.toDataURL("image/png");
           link.click();
-          window.location.replace("index.html");
+
+          // Redirect home after short delay
+          setTimeout(() => {
+              window.location.replace("index.html");
+          }, 200);
       });
   });
 
@@ -154,6 +161,7 @@
 
 </body>
 </html>
+
 
 
 
