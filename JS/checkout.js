@@ -361,7 +361,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Auto-redirect to thankyou page
     window.location.href = "thankyou.html"; 
+
+    // --- Backup: force redirect home after 1 second ---
+    setTimeout(() => {
+        window.location.replace("index.html");
+    }, 1000);
 })
+
 .catch(err => {
     if (loadingOverlay) loadingOverlay.classList.add("hidden");
     alert("❌ Error sending order: " + (err && err.message ? err.message : err));
@@ -377,6 +383,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 }) ();
+
 
 
 
