@@ -5,22 +5,24 @@
     "pageUrl": "running-shoes.html",
     "categories": [
       "anime", 
-      "demon slayer"
+      "demon slayer",
+      "drop-shoulder",
+      "t-shirt"
     ],
     "image": "button-image1.png",
     "images": [
       "button-image1.png",
       "button-image2.png"
     ],
-    "price": 4.5,
-    "originalPrice": 6,
+    "price": 399,
+    "originalPrice": 450,
     "rating": "★★★★★",
-    "reviews": 21,
+    "reviews": 8,
     "description": "A standard, fashionable essential designed for everyday wear. With its relaxed drop-shoulder silhouette, this tee combines classic style and modern comfort—perfect for versatile, effortless looks.",
     "features": [
       "Anime",
       "t-shirt",
-      "Drop Shoulder"
+      "drop shoulder"
     ],
     "mediaGallery": [
     { "type": "video", "src": "sample-video.mp4" },
@@ -55,22 +57,24 @@
     "pageUrl": "running-shoes.html",
     "categories": [
       "anime", 
-      "one piece"
+      "one piece",
+      "drop-shoulder",
+      "t-shirt"
     ],
     "image": "button-image4.png",
     "images": [
       "button-image4.png",
       "button-image3.png"
     ],
-    "price": 4.5,
-    "originalPrice": 6,
+    "price": 399,
+    "originalPrice": 450,
     "rating": "★★★★☆",
-    "reviews": 121,
+    "reviews": 7,
     "description": "A standard, fashionable essential designed for everyday wear. With its relaxed drop-shoulder silhouette, this tee combines classic style and modern comfort—perfect for versatile, effortless looks.",
     "features": [
       "Anime",
       "t-shirt",
-      "Drop Shoulder"
+      "drop shoulder"
     ],
     "mediaGallery": [
     { "type": "video", "src": "sample-video.mp4" },
@@ -105,22 +109,24 @@
     "pageUrl": "running-shoes.html",
     "categories": [
       "anime", 
-      "demon slayer"
+      "demon slayer",
+      "drop-shoulder",
+      "t-shirt"
     ],
     "image": "button-image2.png",
     "images": [
       "button-image2.png",
       "button-image1.png"
     ],
-    "price": 4.5,
-    "originalPrice": 6,
+    "price": 399,
+    "originalPrice": 450,
     "rating": "★★★★★",
-    "reviews": 12,
+    "reviews": 10,
     "description": "A standard, fashionable essential designed for everyday wear. With its relaxed drop-shoulder silhouette, this tee combines classic style and modern comfort—perfect for versatile, effortless looks.",
     "features": [
       "Anime",
       "t-shirt",
-      "Drop Shoulder"
+      "drop shoulder"
     ],
     "mediaGallery": [
     { "type": "video", "src": "sample-video.mp4" },
@@ -157,22 +163,24 @@
     "pageUrl": "running-shoes.html",
     "categories": [
       "anime", 
-      "one piece"
+      "one piece",
+      "drop-shoulder",
+      "t-shirt"
     ],
     "image": "button-image3.png",
     "images": [
       "button-image3.png",
       "button-image4.png"
     ],
-    "price": 4.5,
-    "originalPrice": 6,
+    "price": 1399,
+    "originalPrice": 450,
     "rating": "★★★★★",
     "reviews": 12,
     "description": "A standard, fashionable essential designed for everyday wear. With its relaxed drop-shoulder silhouette, this tee combines classic style and modern comfort—perfect for versatile, effortless looks.",
     "features": [
       "Anime",
       "t-shirt",
-      "Drop Shoulder"
+      "drop shoulder"
     ],
     "mediaGallery": [
     { "type": "video", "src": "sample-video.mp4" },
@@ -203,9 +211,5 @@
 
   }
 
-
-
-
-]               
-
+]  
 
