@@ -73,99 +73,81 @@
   </div>
 
 <script>
-  // Read tempCart ONLY once
-  const tempCart = JSON.parse(sessionStorage.getItem("tempCart") || "[]");
-  sessionStorage.removeItem("tempCart"); // erase immediately
+function initThankYouPage() {
+    // Always start fresh
+    const tempCart = JSON.parse(sessionStorage.getItem("tempCart") || "[]");
+    sessionStorage.removeItem("tempCart"); // erase immediately
 
-  if (!tempCart.length) {
-      // No products → go home
-      window.location.replace("index.html");
-  }
+    // If no products → redirect home
+    if (!tempCart.length) {
+        window.location.replace("index.html");
+        return;
+    }
 
-  // Render receipt
-  const receiptDiv = document.getElementById("receipt");
-  const deliveryCharge = 50;
-  let totalAmount = 0;
+    // Render receipt
+    const receiptDiv = document.getElementById("receipt");
+    const deliveryCharge = 50;
+    let totalAmount = 0;
 
-  tempCart.forEach((item, index) => {
-      const itemTotal = item.price * item.quantity;
-      totalAmount += itemTotal;
-      const div = document.createElement("div");
-      div.className = "flex justify-between border-b pb-2 items-center";
-      div.innerHTML = `
-        <div class="flex items-center space-x-4">
-          <img src="image/${item.image || 'placeholder.png'}" class="w-16 h-16 object-cover rounded-md border">
-          <div>
-            <p class="font-semibold">${index+1}. ${item.title}</p>
-            ${item.color ? `<p class="text-gray-500 text-sm">Color: ${item.color}</p>` : ""}
-            ${item.size ? `<p class="text-gray-500 text-sm">Size: ${item.size}</p>` : ""}
-            <p class="text-gray-500 text-sm">Qty: ${item.quantity}</p>
-          </div>
-        </div>
-        <div class="font-semibold">৳${itemTotal.toFixed(2)}</div>
-      `;
-      receiptDiv.appendChild(div);
-  });
+    tempCart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        totalAmount += itemTotal;
 
-  document.getElementById("totalCharge").innerHTML = `
-    <p>Delivery Charge: ৳${deliveryCharge.toFixed(2)}</p>
-    <p class="text-xl font-bold mt-2">Grand Total: ৳${(totalAmount+deliveryCharge).toFixed(2)}</p>
-  `;
+        const div = document.createElement("div");
+        div.className = "flex justify-between border-b pb-2 items-center";
+        div.innerHTML = `
+            <div class="flex items-center space-x-4">
+              <img src="image/${item.image || 'placeholder.png'}" class="w-16 h-16 object-cover rounded-md border">
+              <div>
+                <p class="font-semibold">${index+1}. ${item.title}</p>
+                ${item.color ? `<p class="text-gray-500 text-sm">Color: ${item.color}</p>` : ""}
+                ${item.size ? `<p class="text-gray-500 text-sm">Size: ${item.size}</p>` : ""}
+                <p class="text-gray-500 text-sm">Qty: ${item.quantity}</p>
+              </div>
+            </div>
+            <div class="font-semibold">৳${itemTotal.toFixed(2)}</div>
+        `;
+        receiptDiv.appendChild(div);
+    });
 
-  // Download PNG
-  document.getElementById("downloadBtn").addEventListener("click", () => {
-      html2canvas(document.getElementById("receiptContainerWrapper")).then(canvas => {
-          const link = document.createElement("a");
-          link.download = "receipt.png";
-          link.href = canvas.toDataURL("image/png");
-          link.click();
-      });
-  });
+    document.getElementById("totalCharge").innerHTML = `
+        <p>Delivery Charge: ৳${deliveryCharge.toFixed(2)}</p>
+        <p class="text-xl font-bold mt-2">Grand Total: ৳${(totalAmount + deliveryCharge).toFixed(2)}</p>
+    `;
 
-  // Back/Home button
-  document.getElementById("homeBtn").addEventListener("click", () => {
-      window.location.href = "index.html";
-  });
+    // --- Event Listeners ---
+    document.getElementById("downloadBtn").addEventListener("click", () => {
+        html2canvas(document.getElementById("receiptContainerWrapper")).then(canvas => {
+            const link = document.createElement("a");
+            link.download = "receipt.png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+            window.location.replace("index.html");
+        });
+    });
 
-  // Force back button to go home
-  history.pushState(null, null, location.href);
-  window.addEventListener("popstate", () => {
-      window.location.replace("index.html");
-  });
+    document.getElementById("homeBtn").addEventListener("click", () => {
+        window.location.replace("index.html");
+    });
 
-  // Handle bfcache restore
-  window.addEventListener("pageshow", (event) => {
-      if (event.persisted) {
-          window.location.replace("index.html");
-      }
-  });
-</script>
+    // Force back button → homepage
+    history.pushState(null, null, location.href);
+    history.pushState(null, null, location.href);
 
-<script>
-  // Clear temporary data (session storage)
-  sessionStorage.removeItem("tempCart");
+    window.addEventListener("popstate", () => {
+        window.location.replace("index.html");
+    });
 
-  // Always redirect if the page is loaded without tempCart
-  if (!sessionStorage.getItem("tempCart")) {
-      // user came here by back button or refresh
-      window.location.replace("index.html");
-  }
+    // Handle page restore (bfcache)
+    window.addEventListener("pageshow", (event) => {
+        if (event.persisted) {
+            window.location.replace("index.html");
+        }
+    });
+}
 
-  // Push fake history state
-  history.pushState(null, null, location.href);
-  history.pushState(null, null, location.href);
-
-  // On back button (popstate), always redirect to homepage
-  window.addEventListener("popstate", function (event) {
-      window.location.replace("index.html");
-  });
-
-  // Handle page restore (bfcache in mobile Safari/Chrome)
-  window.addEventListener("pageshow", function (event) {
-      if (event.persisted) {
-          window.location.replace("index.html");
-      }
-  });
+// Run on load
+document.addEventListener("DOMContentLoaded", initThankYouPage);
 </script>
 
 
@@ -176,6 +158,7 @@
 
 </body>
 </html>
+
 
 
 
